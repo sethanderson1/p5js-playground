@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import p5 from "p5";
-import sketch from './sketch';
+// import sketch from './sketch';
 import followMouse from './followMouse';
 import "./App.css";
 
