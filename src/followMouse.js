@@ -1,14 +1,22 @@
 const sketch = p => {
     let x = 0;
     let y = 0;
+    let mouse
+    let dot
+    let dotToMouseDirection
+
     let windowInnerWidth = window.innerWidth;
-    let width = windowInnerWidth/2;
     let windowInnerHeight = window.innerHeight;
-    let height = windowInnerHeight/2;
+    let width = windowInnerWidth;
+    let height = windowInnerHeight;
+
+
+
     p.setup = () => {
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
+        p.frameRate(10);
     };
 
     p.setupPosition = () => {
@@ -23,17 +31,52 @@ const sketch = p => {
     };
 
     p.drawBackground = () => {
-        // p.color = 
-        p.background(0,0,0,88);
+        p.background(0);
     };
 
     p.draw = () => {
-        p.fill(255, 255, 0, 25);
+        p.fill(255, 255, 0, 10);
         p.noStroke();
         p.ellipse(x, y, 48, 48);
 
-        x = x + p.random(-10, 10);
-        y = y + p.random(-10, 10);
+        let limitLeft = 10;
+        let limitRight = 10;
+        let limitUp = 10;
+        let limitDown = 10;
+
+        // if mouse is in certain position
+        // relative to dot, increase limit
+        // in those directions OR decrease 
+        // limits for opposite directions
+
+        // also maybe do dot gets bigger and smaller
+        // according to timing function and 
+        // changes in color and other ways
+
+        // also do gets faster towards mouse as 
+        // gets closer
+
+        let mouseX = p.mouseX;
+        let mouseY = p.mouseY;
+        mouse = p.createVector(mouseX, mouseY);
+
+        mouse.sub(dot);
+        mouse.normalize();
+        // console.log('mouse', mouse)
+
+
+        // make more random
+        limitLeft = -limitLeft * mouse.x;
+        limitRight = limitRight * mouse.x;
+        limitUp = -limitUp * mouse.y;
+        limitDown = limitDown * mouse.y;
+
+
+        x = x + p.random(-limitLeft, limitRight);
+        y = y + p.random(-limitUp, limitDown);
+        dot = p.createVector(x, y);
+
+
     };
 };
 
