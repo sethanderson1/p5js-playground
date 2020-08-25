@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(119, 112, 112);
+    margin:20px;
+    border: 1px solid blue;
+}
+
+/* .container {
+    color:blue;
+    border:1px solid green;
+} */
+
+section {
+    margin:10px;
+    padding:10px;
+    border: 1px solid orange;
+    display: inline;
+    text-align: center;
+}
+
+
+
+ 
