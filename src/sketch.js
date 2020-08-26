@@ -27,6 +27,7 @@ const sketch = p => {
     };
 
     p.draw = () => {
+        
         p.fill(255, 255, 255, 25);
         p.noStroke();
         p.ellipse(x, y, 48, 48);

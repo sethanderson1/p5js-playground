@@ -10,6 +10,7 @@ const sketch = p => {
     let windowInnerWidth = window.innerWidth;
     let windowInnerHeight = window.innerHeight;
     let width = windowInnerWidth;
+    console.log('width', width)
     let height = windowInnerHeight;
 
 
@@ -18,7 +19,7 @@ const sketch = p => {
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
-        p.frameRate(10);
+        // p.frameRate(10);
     };
 
     p.setupPosition = () => {
@@ -38,6 +39,8 @@ const sketch = p => {
 
     p.draw = () => {
 
+        let alpha = 1;
+        let ellipseWidth = p.windowHeight / 20;
 
         let limitLeft = 50;
         let limitRight = 50;
@@ -94,9 +97,9 @@ const sketch = p => {
         y = y + p.random( -limitUpCoef * Math.abs(limitUp), limitDownCoef * Math.abs(limitDown));
         dot = p.createVector(x, y);
 
-        p.fill(255, 255, 255, 5);
+        p.fill(255, 255, 255, alpha);
         p.noStroke();
-        p.ellipse(x, y, 48, 48);
+        p.ellipse(x, y, ellipseWidth, ellipseWidth);
 
 
     };
