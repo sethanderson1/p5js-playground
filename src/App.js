@@ -27,8 +27,10 @@ export default function App() {
     <div className="App">
       <main>
         <section>
-          <div className="follow-mouse" ref={sketchFollowMouse}>
+        <div className="follow-mouse" ref={sketchFollowMouse}>
           </div>
+          {/* <div className="color-swarm" ref={sketchColorSwarm}>
+          </div> */}
           {/* <div className="sketch" ref={sketchDomElement}>
           </div> */}
         </section>
