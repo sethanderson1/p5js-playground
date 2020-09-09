@@ -4,19 +4,21 @@ const sketch = p => {
 
     // make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
-    const numBalls =100;
+    const numBalls = 300;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameter =50 ;
-    const diameterChange = 0.999999;
+    const ballDiameter =20;
+    const diameterChange = 0.96;
     const spring = 3;
-    const gravity = 0;
+    const gravity = 0.1;
     const friction = -1;
+    const speedThreshold = 14;
     const balls = [];
     const backgoundColor = 230;
-    const colorOne = [150, 80, 80];
-    const colorTwo = [80, 150, 80];
-    const colorThree = [80, 80, 150];
+    const alpha = 255;
+    const colorOne = [150, 80, 80, alpha];
+    const colorTwo = [0,0,0,alpha];
+    const colorThree = [80, 80, 150, alpha];
     let ballStartColor = colorOne;
     // let ballColor = [180, 180, 180];
     let infectedOne = true;
@@ -33,7 +35,6 @@ const sketch = p => {
     let height = windowInnerHeight;
     // const spiralConstant = 2;
     // const infectedOneColor = [200, 0, 0];
-    const speedThreshold = 4;
 
     const ballsPerRow = Math.ceil(Math.sqrt(numBalls));
     const rowScaleDenom = ballsPerRow + 1;
@@ -153,11 +154,12 @@ const sketch = p => {
     };
 
     p.drawBackground = () => {
-        p.background(0);
+        p.background(255);
     };
 
     p.draw = () => {
-        p.background(240);
+        // p.background(240);
+        // p.background(0,0,0,2);
         balls.forEach(ball => {
             ball.collide();
             ball.move();
