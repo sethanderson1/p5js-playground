@@ -4,19 +4,19 @@ const sketch = p => {
 
     // make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
-    const numBalls =100;
+    const numBalls = 180;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameter =50 ;
+    const ballDiameter = 50;
     const diameterChange = 0.999999;
     const spring = 3;
     const gravity = 0;
     const friction = -1;
     const balls = [];
     const backgoundColor = 230;
-    const colorOne = [150, 80, 80];
-    const colorTwo = [80, 150, 80];
-    const colorThree = [80, 80, 150];
+    const colorOne = [150, 80, 80, 5];
+    const colorTwo = [80, 150, 80, 5];
+    const colorThree = [80, 80, 150, 5];
     let ballStartColor = colorOne;
     // let ballColor = [180, 180, 180];
     let infectedOne = true;
@@ -153,16 +153,18 @@ const sketch = p => {
     };
 
     p.drawBackground = () => {
-        p.background(0);
+        p.background([0,0,0,11]);
     };
 
     p.draw = () => {
-        p.background(240);
+        if (p.frameCount % 4 === 0) {
+            p.drawBackground() 
+
+        }
         balls.forEach(ball => {
             ball.collide();
             ball.move();
             ball.display();
-
         });
 
     };
