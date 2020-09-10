@@ -8,15 +8,17 @@ const sketch = p => {
     let j = [...Array(numBalls).keys()];
     let k;
     const ballDiameter = 50;
-    const diameterChange = 0.999999;
-    const spring = 3;
+    const diameterChange = 0.999;
+    const spring = 30;
     const gravity = 0;
     const friction = -1;
     const balls = [];
     const backgoundColor = 230;
-    const colorOne = [150, 80, 80, 5];
-    const colorTwo = [80, 150, 80, 5];
-    const colorThree = [80, 80, 150, 5];
+    const alpha = 200;
+    const alphaBackground = 3
+    const colorOne = [150, 80, 80,alpha];
+    const colorTwo = [80, 150, 80,alpha];
+    const colorThree = [80, 80, 150,alpha];
     let ballStartColor = colorOne;
     // let ballColor = [180, 180, 180];
     let infectedOne = true;
@@ -153,11 +155,11 @@ const sketch = p => {
     };
 
     p.drawBackground = () => {
-        p.background([0,0,0,11]);
+        p.background([0,0,0,alphaBackground]);
     };
 
     p.draw = () => {
-        if (p.frameCount % 4 === 0) {
+        if (p.frameCount % 3 === 0) {
             p.drawBackground() 
 
         }
@@ -398,6 +400,7 @@ const sketch = p => {
         display() {
 
             p.fill(this.color);
+            // p.stroke(0,0,0,88)
             // console.log(this.color[0])
             p.ellipse(this.x, this.y, this.diameter, this.diameter);
 
