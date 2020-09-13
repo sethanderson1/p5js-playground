@@ -3,33 +3,73 @@
 // ball2 changes ball3's color
 // ball3 changes ball1's color
 
+
 const sketch = (p) => {
+
 
     let width = window.innerWidth;
     let height = window.innerHeight;
 
+    let isIncreasing
+
+    let colorVal = 0;
+
     p.setup = () => {
-        p.createCanvas(width,height*0.992);
+        p.createCanvas(width, height * 0.992);
+        p.frameRate(6)
     }
 
-        p.draw = () => {
-        p.background(0,0,0);
+    p.draw = () => {
+        p.background(200);
 
         var space = 50; // x spacing
-        var w = 28;
-        const colLength = 50;
+        var hexWidth = 30;
+        const colLength = Math.ceil(width / space);
+        let hexColorOne = [200, 0, 0]
+        let hexColorTwo = [0, 200, 0]
+
+        let randColor;
+        let colorUpperLimit = 200;
+        let colorLowerLimit = 0
+
+
+
+        if (colorVal === colorUpperLimit-1) {
+            isIncreasing = false
+        } else if (colorVal === colorLowerLimit) {
+            isIncreasing = true
+        }
+        // console.log('isIncreasing', isIncreasing)
+ 
+        if (isIncreasing) {
+            colorVal = p.frameCount % colorUpperLimit
+
+        } else {
+            colorVal = colorUpperLimit- p.frameCount % colorUpperLimit-1
+        }
+
+
+
 
         for (var y = 0; y < colLength; y++) {
             var py = y * space * p.sqrt(3) / 2; // y position
             for (var x = 0; x < colLength; x++) {
-                if (y % 2 === 0) hexagon(x * space, py, w, w);
-                else hexagon(space / 2 + x * space, py, w, w);
+                randColor = [p.random(colorVal),p.random(colorVal),p.random(colorVal)]
+                // console.log('randColor', randColor)
+
+                if (y % 2 === 0) {
+                    hexagon(x * space, py, hexWidth, hexWidth, randColor);
+                    // console.log('x', x)
+                } else {
+                    hexagon(space / 2 + x * space, py, hexWidth, hexWidth, randColor);
+                }
             }
         }
     }
 
-    function hexagon(x, y, radius) {
-        p.fill(100,100,100);
+    function hexagon(x, y, radius, ...color) {
+        // console.log('color', color)
+        p.fill(...color[1]);
         p.noStroke();
         p.angleMode(p.DEGREES);
         p.beginShape();
