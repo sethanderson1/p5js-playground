@@ -1,98 +1,61 @@
 // color swarm - when balls touch they change color 
+// ball1 changes ball2's color
+// ball2 changes ball3's color
+// ball3 changes ball1's color
 
-const sketch = p => {
+const sketch = (p) => {
 
-    // make thing where when two red hit each other, they turn 
-    // blue and when two blue hit each other they turn red
-    const numBalls =100;
-    let j = [...Array(numBalls).keys()];
-    let k;
-    const ballDiameter =50 ;
-    const diameterChange = 0.999999;
-    const spring = 3;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const numBalls = 3;
+    const ballDiameter = 250;
+    const diameterChange = 1;
+    const spring = 2;
+    const speedThreshold = 4;
     const gravity = 0;
     const friction = -1;
     const balls = [];
-    const backgoundColor = 230;
-    const colorOne = [150, 80, 80];
-    const colorTwo = [80, 150, 80];
-    const colorThree = [80, 80, 150];
-    let ballStartColor = colorOne;
-    // let ballColor = [180, 180, 180];
-    let infectedOne = true;
+
+    const alphaForBall = 255; // between 0 and 255
+    const colorZero = [150, 80, 80, alphaForBall];
+    const colorOne = [80, 150, 80, alphaForBall];
+    const colorTwo = [80, 80, 150, alphaForBall];
+
+    let ballStartColor = colorZero;
+    let infectedZero = true;
+    let infectedOne = false;
     let infectedTwo = false;
-    let infectedThree = false;
 
-    // const recovered = false;
-    let x = 0;
-    let y = 0;
-    let windowInnerWidth = window.innerWidth;
-    let windowInnerHeight = window.innerHeight;
-    let width = windowInnerWidth;
-    console.log('width', width)
-    let height = windowInnerHeight;
-    // const spiralConstant = 2;
-    // const infectedOneColor = [200, 0, 0];
-    const speedThreshold = 4;
-
-    const ballsPerRow = Math.ceil(Math.sqrt(numBalls));
-    const rowScaleDenom = ballsPerRow + 1;
-    const xSpacing = width / rowScaleDenom;
-
-    const ballsPerCol = Math.ceil(Math.sqrt(numBalls));
-    const colScaleDenom = ballsPerCol + 1;
-    const ySpacing = height / colScaleDenom;
-    const xCoords = [];
-    const yCoords = [];
-    // console.log('xSpacing', xSpacing)
-    // console.log('ySpacing', ySpacing)
-    // console.log('ballsPerRow', ballsPerRow)
-    // console.log('ballsPerCol', ballsPerCol)
-
-    for (let i = 0; i < ballsPerRow; i++) {
-        // console.log(xCoords)
-
-        for (let j = 0; j < ballsPerCol; j++) {
-            yCoords.push(ySpacing * (j + 1));
-            xCoords.push(xSpacing * (i + 1));
-        }
-
-    }
-    // console.log('xCoords', xCoords)
-    // console.log('yCoords', yCoords)
-
-
-
+    const { xCoords, yCoords } = generateInitialBallPositions(numBalls, width, height)
 
     p.setup = () => {
         // p.frameRate(10);
         p.createCanvas(width, height);
         p.drawBackground();
-        p.setupPosition();
+        // p.setupPosition();
         for (let i = 0; i < numBalls; i++) {
             // if (i >= Math.floor(1/3*numBalls)) {
             if (i % 3 === 1) {
-                infectedOne = false;
-                infectedTwo = true;
-                infectedThree = false;
-                ballStartColor = colorTwo;
+                infectedZero = false;
+                infectedOne = true;
+                infectedTwo = false;
+                ballStartColor = colorOne;
             }
             // if (i >= Math.floor(2/3*numBalls)) {
             if (i % 3 === 2) {
+                infectedZero = false;
                 infectedOne = false;
-                infectedTwo = false;
-                infectedThree = true;
-                ballStartColor = colorThree;
+                infectedTwo = true;
+                ballStartColor = colorTwo;
             }
             if (i % 3 === 0) {
-                infectedOne = true;
+                infectedZero = true;
+                infectedOne = false;
                 infectedTwo = false;
-                infectedThree = false;
-                ballStartColor = colorOne;
+                ballStartColor = colorZero;
             }
             balls[i] = new Ball(
-                // spiralConstant * i * cos(1 * i) + width / 2,
-                // spiralConstant * i * sin(1 * i) + height / 2,
                 xCoords[i],
                 yCoords[i],
                 ballDiameter,
@@ -100,51 +63,20 @@ const sketch = p => {
                 balls,
                 ballStartColor,
                 overlap,
+                infectedZero,
                 infectedOne,
-                infectedTwo,
-                infectedThree
+                infectedTwo
             );
         }
-        // let i = numBalls - 1;
-        // balls[i] = new Ball(
-        //     // spiralConstant * i * cos(1 * i) + width / 2,
-        //     // spiralConstant * i * sin(1 * i) + height / 2,
-        //     xCoords[i],
-        //     yCoords[i],
-        //     ballDiameter,
-        //     i,
-        //     balls,
-        //     infectedOneColor,
-        //     overlap,
-        //     true
-        // );
+
         p.noStroke();
 
-        // var minutesLabel = document.getElementById("minutes");
-        // var secondsLabel = document.getElementById("seconds");
-        // var totalSeconds = 0;
-        // setInterval(setTime, 1000);
-
-        // function setTime() {
-        //     ++totalSeconds;
-        //     secondsLabel.innerHTML = pad(totalSeconds % 60);
-        //     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-        // }
-
-        // function pad(val) {
-        //     var valString = val + "";
-        //     if (valString.length < 2) {
-        //         return "0" + valString;
-        //     } else {
-        //         return valString;
-        //     }
-        // }
     };
 
-    p.setupPosition = () => {
-        x = p.windowWidth / 2;
-        y = p.windowHeight / 2;
-    };
+    // p.setupPosition = () => {
+    //     // let x = p.windowWidth / 2;
+    //     // let y = p.windowHeight / 2;
+    // };
 
     p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
@@ -157,52 +89,17 @@ const sketch = p => {
     };
 
     p.draw = () => {
-        p.background(240);
+        p.background(255);
         balls.forEach(ball => {
             ball.collide();
             ball.move();
             ball.display();
-
         });
-
+        // console.log('frameRate', p.frameRate())
     };
 
-
-
-
-
-
-    // function colorChange(ball) {
-    //     if (JSON.stringify(ball.color) === JSON.stringify([255, 255, 0])) {
-    //         return [50, 50, 0];
-    //     } else {
-    //         return [255, 255, 0];
-    //     }
-    // }
-
-    function ballsCollided(ball) {
-
-    }
-
-    function refractory() {
-
-    }
-
-    function overlap() {
-
-    }
-
-    function endOverlap() {
-
-    }
-
-
-
-
-
-
     class Ball {
-        constructor(xin, yin, din, idin, oin, color, overlap, infectedOne, infectedTwo, infectedThree) {
+        constructor(xin, yin, din, idin, oin, color, overlap, infectedZero, infectedOne, infectedTwo) {
             this.x = xin;
             this.y = yin;
             this.vx = p.random(-1, 1);
@@ -212,36 +109,30 @@ const sketch = p => {
             this.others = oin;
             this.color = color;
             this.overlap = false;
+            this.infectedZero = infectedZero;
             this.infectedOne = infectedOne;
             this.infectedTwo = infectedTwo;
-            this.infectedThree = infectedThree;
         }
 
         collide() {
-            // let startIndex = this.id;
-            // console.log('frameCount', frameCount);
-            // console.log('this.id', this.id);
-            // console.log('this.id', this.id);
-            let k = [];
+
+            let otherBalls = [];
             for (let l = 0; l < numBalls; l++) {
-                k.push((this.id + l) % numBalls);
+                otherBalls.push((this.id + l) % numBalls);
             }
-            k = k.filter(el => el !== this.id)
-            // console.log('k', k);
+            otherBalls = otherBalls.filter(el => el !== this.id)
             let i;
-            for (let m = 0; m < k.length; m++) {
-                i = k[m];
-                // console.log('i', i)
-
-
+            for (let m = 0; m < otherBalls.length; m++) {
+                i = otherBalls[m];
                 let dx = this.others[i].x - this.x;
                 let dy = this.others[i].y - this.y;
                 let distance = p.sqrt(dx * dx + dy * dy);
-                let minDist = this.others[i].diameter / 2 + this.diameter / 2;
-                let overlapping = distance < minDist;
+                let minDist = this.others[i].diameter / 2
+                    + this.diameter / 2;
+                let overlapping = distance <= minDist*1.01;
+                // console.log('overlapping', overlapping)
                 if (overlapping) {
-                    // this.infectedOne = true;
-                    // this.others[i].infectedOne = true;
+
                     let angle = p.atan2(dy, dx);
                     let targetX = this.x + p.cos(angle) * minDist;
                     let targetY = this.y + p.sin(angle) * minDist;
@@ -251,126 +142,76 @@ const sketch = p => {
                     this.vy -= ay;
                     this.others[i].vx += ax;
                     this.others[i].vy += ay;
-                    // if (this.id ===0) {
-                    //     console.log('this.vx',this.vx)
 
-                    // }
                     if (this.vx > 0) {
-                        this.vx = this.vx > speedThreshold ? speedThreshold : this.vx;
+                        this.vx = this.vx > speedThreshold
+                            ? speedThreshold : this.vx;
                     }
                     if (this.vx < 0) {
-                        this.vx = this.vx < -speedThreshold ? -speedThreshold : this.vx;
+                        this.vx = this.vx < -speedThreshold
+                            ? -speedThreshold : this.vx;
                     }
 
                     if (this.vy > 0) {
-                        this.vy = this.vy > speedThreshold ? speedThreshold : this.vy;
+                        this.vy = this.vy > speedThreshold
+                            ? speedThreshold : this.vy;
                     }
                     if (this.vy < 0) {
-                        this.vy = this.vy < -speedThreshold ? -speedThreshold : this.vy;
+                        this.vy = this.vy < -speedThreshold
+                            ? -speedThreshold : this.vy;
                     }
 
                     if (this.others[i].vx > 0) {
-                        this.others[i].vx = this.others[i].vx > speedThreshold ? speedThreshold : this.others[i].vx;
+                        this.others[i].vx =
+                            this.others[i].vx > speedThreshold
+                                ? speedThreshold : this.others[i].vx;
                     }
                     if (this.others[i].vx < 0) {
-                        this.others[i].vx = this.others[i].vx < -speedThreshold ? -speedThreshold : this.others[i].vx;
+                        this.others[i].vx =
+                            this.others[i].vx < -speedThreshold
+                                ? -speedThreshold : this.others[i].vx;
                     }
 
                     if (this.others[i].vy > 0) {
-                        this.others[i].vy = this.others[i].vy > speedThreshold ? speedThreshold : this.others[i].vy;
+                        this.others[i].vy =
+                            this.others[i].vy > speedThreshold
+                                ? speedThreshold : this.others[i].vy;
                     }
                     if (this.others[i].vy < 0) {
-                        this.others[i].vy = this.others[i].vy < -speedThreshold ? -speedThreshold : this.others[i].vy;
+                        this.others[i].vy =
+                            this.others[i].vy < -speedThreshold
+                                ? -speedThreshold : this.others[i].vy;
                     }
 
-                    // let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-
-
-                    // console.log(`collision occured between ${this.id} and ${this.others[i].id}`, this)
-                    if (this.infectedOne === true && this.others[i].infectedTwo === true) {
-                        // console.log('one is infectedOne')
-
-                        // this.color = colorOne;
-                        this.others[i].color = colorOne;
+                    // console.log(`collision occured between ${this.id}
+                    // and ${this.others[i].id}`, this)
+                    // console.log('this.id', this.id)
+                    // console.log('this.others[i].id', this.others[i].id)
+                    // console.log('i', i)
+                    // console.log('p.frameCount', p.frameCount)
+                    if (this.infectedZero === true
+                        && this.others[i].infectedOne === true) {
                         this.diameter = this.diameter / diameterChange;
-                        // this.overlap = true;
-                        // this.others[i].overlap = true;
-                        this.infectedOne = true;
-                        this.others[i].infectedOne = true;
-                        this.infectedTwo = false;
-                        this.others[i].infectedTwo = false;
-                        // this.infectedThree = false;
-                        // this.others[i].infectedThree = false;
-                    } else if (this.infectedTwo === true && this.others[i].infectedThree === true) {
-                        // console.log('one is infectedTwo')
+                        this.others[i].color = colorZero;
+                        this.others[i].infectedZero = true;
+                        this.others[i].infectedOne = false;
+                    } else if (this.infectedOne === true
+                        && this.others[i].infectedTwo === true) {
                         this.diameter = this.diameter * diameterChange;
-
-                        // this.color = colorTwo;
-                        this.others[i].color = colorTwo;
-                        // this.overlap = true;
-                        // this.others[i].overlap = true;
-                        // this.infectedOne = false;
-                        // this.others[i].infectedOne = false;
-                        this.infectedTwo = true;
-                        this.others[i].infectedTwo = true;
-                        this.infectedThree = false;
-                        this.others[i].infectedThree = false;
-                    } else if (this.infectedThree === true && this.others[i].infectedOne === true) {
-                        // console.log('one is infectedThree')
-
-
+                        this.others[i].color = colorOne;
+                        this.others[i].infectedOne = true;
+                        this.others[i].infectedTwo = false;
+                    } else if (this.infectedTwo === true
+                        && this.others[i].infectedZero === true) {
                         this.diameter = Math.random() < 0.5
                             ? this.diameter * diameterChange
                             : this.diameter / diameterChange;
-
-                        // this.color = colorThree;
-                        this.others[i].color = colorThree;
-                        // this.overlap = true;
-                        // this.others[i].overlap = true;
-                        this.infectedOne = false;
-                        this.others[i].infectedOne = false;
-                        // this.infectedTwo = false;
-                        // this.others[i].infectedTwo = false;
-                        this.infectedThree = true;
-                        this.others[i].infectedThree = true;
+                        this.others[i].color = colorTwo;
+                        this.others[i].infectedTwo = true;
+                        this.others[i].infectedZero = false;
                     }
-                    // else if (this.infectedOne === true && this.others[i].infectedThree === true) {
-                    //     console.log('one is infectedThree')
-                    //     this.color = colorThree;
-                    //     // this.others[i].color = colorThree;
-                    //     // this.overlap = true;
-                    //     // this.others[i].overlap = true;
-                    //     this.infectedOne = false;
-                    //     this.others[i].infectedOne = false;
-                    //     // this.infectedTwo = false;
-                    //     // this.others[i].infectedTwo = false;
-                    //     this.infectedThree = true;
-                    //     this.others[i].infectedThree = true;
-                    // }
-
-
-
-
-
-
                 }
-                // if (this.overlap === true && this.others[i].overlap === true && overlapping === false) {
-                //     // this.color = [30,100,30];
-                //     // this.others[i].color = colorChange(this.others[i]);
-                //     // this.others[i].color = [30,100,30];
-                //     this.color = [30,100,30];
-                //     this.others[i].color = [30,100,30];
-                //     this.overlap = false;
-                //     this.others[i].overlap = false;
-                //     this.infectedOne = true;
-                //     this.others[i].infectedOne = true;
-                //     // console.log('234')
-                // }
-                // console.log(i,this.infectedOne)
-
             }
-
-
         }
 
         move() {
@@ -395,23 +236,56 @@ const sketch = p => {
 
         display() {
 
+            const word = this.id.toString();
+
             p.fill(this.color);
-            // console.log(this.color[0])
             p.ellipse(this.x, this.y, this.diameter, this.diameter);
 
+            p.textSize(32);
+            p.fill(50);
+            p.text(word, this.x, this.y);
         }
     }
-
-
-
-
-
-
-
 };
 
 
 
+function generateInitialBallPositions(numBalls, width, height) {
+    const ballsPerRow = Math.ceil(Math.sqrt(numBalls));
+    const rowScaleDenom = ballsPerRow + 1;
+    const xSpacing = width / rowScaleDenom;
+
+    const ballsPerCol = Math.ceil(Math.sqrt(numBalls));
+    const colScaleDenom = ballsPerCol + 1;
+    const ySpacing = height / colScaleDenom;
+    const xCoords = [];
+    const yCoords = [];
+
+    for (let i = 0; i < ballsPerRow; i++) {
+        for (let j = 0; j < ballsPerCol; j++) {
+            yCoords.push(ySpacing * (j + 1));
+            xCoords.push(xSpacing * (i + 1));
+        }
+    }
+
+    return { xCoords, yCoords }
+}
+
+function ballsCollided(ball) {
+
+}
+
+function refractory() {
+
+}
+
+function overlap() {
+
+}
+
+function endOverlap() {
+
+}
 
 
 
