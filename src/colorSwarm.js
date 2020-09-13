@@ -8,8 +8,10 @@ const sketch = (p) => {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    const numBalls = 3;
-    const ballDiameter = 250;
+    const numBalls = 30;
+    const ballDiameter = 100;
+    // todo: ball diameter should be a percentage of screen width
+    // or height
     const diameterChange = 1;
     const spring = 2;
     const speedThreshold = 4;
@@ -129,8 +131,12 @@ const sketch = (p) => {
                 let distance = p.sqrt(dx * dx + dy * dy);
                 let minDist = this.others[i].diameter / 2
                     + this.diameter / 2;
-                let overlapping = distance <= minDist*1.01;
+                let overlapping = distance <= minDist*1.0101;
                 // console.log('overlapping', overlapping)
+                // todo: issue: sometimes doesn't switch color 
+                // when collide
+                // hmm seems minDist coef of 1.001 solves problem
+                // 
                 if (overlapping) {
 
                     let angle = p.atan2(dy, dx);
@@ -243,7 +249,7 @@ const sketch = (p) => {
 
             p.textSize(32);
             p.fill(50);
-            p.text(word, this.x, this.y);
+            // p.text(word, this.x, this.y);
         }
     }
 };
