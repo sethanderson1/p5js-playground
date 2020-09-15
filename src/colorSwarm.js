@@ -1,5 +1,6 @@
 
 
+// todo: make a version with smoothed noise function, ie not totally random
 const sketch = (p) => {
 
     let width = window.innerWidth;
@@ -8,29 +9,32 @@ const sketch = (p) => {
 
     p.setup = () => {
         p.createCanvas(width, height * 0.992);
-        // p.frameRate(10)
+        p.frameRate(30)
         p.initHex()
     }
 
     p.initHex = async () => {
-        let space = 50; // x spacing
-        let hexWidth = 30;
+        let space = 100; // x spacing
+        let hexWidth = 60;
         let colLength = Math.ceil(width / space);
         let id = 0;
+        let upperBound = 255;
+        let lowerBound = 220;
         for (let y = 0; y < colLength; y++) {
             let py = y * space * p.sqrt(3) / 2; // y position
             for (let x = 0; x < colLength; x++) {
-                let shadeVal = Math.floor(Math.random() * 255);
-                // console.log('shadeVal', shadeVal)
+                let color = p.random(lowerBound, upperBound);
                 if (y % 2 === 0) {
-                    hex[id] = new Hex(id, x * space, py, hexWidth, shadeVal)
-                    hex[id].makeHexagon()
+                    hex[id] = new Hex(id, x * space, py, hexWidth,
+                        color, upperBound, lowerBound);
+                    hex[id].makeHexagon();
                 } else {
-                    hex[id] = new Hex(id, space / 2 + x * space, py, hexWidth, shadeVal)
-                    hex[id].makeHexagon()
+                    hex[id] = new Hex(id, space / 2 + x * space, py,
+                        hexWidth, color, upperBound, lowerBound);
+                    hex[id].makeHexagon();
                 }
-                // console.log('hex[id]', hex[id])
                 id++;
+                console.log('id', id)
             }
         }
     }
@@ -44,41 +48,39 @@ const sketch = (p) => {
     }
 
     class Hex {
-        constructor(id, x, y, radius, color) {
+        constructor(id, x, y, radius, color, upperBound, lowerBound) {
             this.id = id;
             this.x = x;
             this.y = y;
             this.radius = radius;
             this.color = color;
             this.isIncreasing = Math.random() > 0.5 ? true : false;
+            this.upperBound = upperBound;
+            this.lowerBound = lowerBound;
         }
 
 
 
         incrementColor() {
 
-            let upperBound = 255;
-            let lowerBound = 0;
-
-            if (this.color > lowerBound && this.color < upperBound) {
-                if (this.isIncreasing) {
-                    this.color++
-                    // this.isIncreasing = false;
-                } else {
-                    this.color--
-                    // this.isIncreasing = true;
+            if (this.color > this.lowerBound && this.color < this.upperBound) {
+                if (Math.random() > 0.7) {
+                    if (this.isIncreasing) {
+                        this.color++;
+                    } else {
+                        this.color--;
+                    }
                 }
             }
 
-            if (this.color === upperBound) {
-                this.color--
-                this.isIncreasing = false
+            if (this.color >= this.upperBound) {
+                this.color--;
+                this.isIncreasing = false;
             }
-            if (this.color === lowerBound) {
-                this.color++
-                this.isIncreasing = true
+            if (this.color <= this.lowerBound) {
+                this.color++;
+                this.isIncreasing = true;
             }
-
         }
 
         makeHexagon() {
