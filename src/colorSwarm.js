@@ -1,102 +1,104 @@
-// color swarm - when balls touch they change color 
-// ball1 changes ball2's color
-// ball2 changes ball3's color
-// ball3 changes ball1's color
 
 
 const sketch = (p) => {
 
-
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let isIncreasing
-    let colorVal = 0;
+    const hex = [];
 
     p.setup = () => {
         p.createCanvas(width, height * 0.992);
-        p.frameRate(6)
+        // p.frameRate(10)
         p.initHex()
     }
 
-
-    p.initHex = () => {
-
-        makeHexagons()
-
-    }
-
-
-    p.draw = () => {
-        p.background(200);
-
-        
-
-
-        // let colorUpperLimit = 200;
-        // let colorLowerLimit = 0
-
-        // if (colorVal === colorUpperLimit - 1) {
-        //     isIncreasing = false
-        // } else if (colorVal === colorLowerLimit) {
-        //     isIncreasing = true
-        // }
-        // if (isIncreasing) {
-        //     colorVal = p.frameCount % colorUpperLimit
-        // } else {
-        //     colorVal = colorUpperLimit - p.frameCount % colorUpperLimit - 1
-        // }
-
-    }
-
-    function hexagon(x, y, radius, ...color) {
-        p.fill(...color[1]);
-        p.noStroke();
-        p.angleMode(p.DEGREES);
-        p.beginShape();
-        for (let a = 30; a < 390; a += 60) {
-            let sx = x + p.cos(a) * radius;
-            let sy = y + p.sin(a) * radius;
-            p.vertex(sx, sy);
-        }
-        p.endShape(p.CLOSE);
-    }
-
-    class Hex {
-        constructor(shadeVal) {
-            this.shadeVal = shadeVal
-        }
-
-        
-
-    }
-
-    const makeHexagons = () => {
+    p.initHex = async () => {
         let space = 50; // x spacing
         let hexWidth = 30;
         let colLength = Math.ceil(width / space);
-        let randColor;
-        const hex = []
+        let id = 0;
         for (let y = 0; y < colLength; y++) {
             let py = y * space * p.sqrt(3) / 2; // y position
             for (let x = 0; x < colLength; x++) {
-                randColor = [p.random(colorVal)]
-
-                hex[x] = new Hex(randColor)
-
+                let shadeVal = Math.floor(Math.random() * 255);
+                // console.log('shadeVal', shadeVal)
                 if (y % 2 === 0) {
-                    hexagon(x * space, py, hexWidth, hexWidth, randColor);
+                    hex[id] = new Hex(id, x * space, py, hexWidth, shadeVal)
+                    hex[id].makeHexagon()
                 } else {
-                    hexagon(space / 2 + x * space, py, hexWidth, hexWidth, randColor);
+                    hex[id] = new Hex(id, space / 2 + x * space, py, hexWidth, shadeVal)
+                    hex[id].makeHexagon()
                 }
+                // console.log('hex[id]', hex[id])
+                id++;
             }
         }
     }
 
+    p.draw = () => {
+        p.background(200);
+        hex.forEach((h) => {
+            h.incrementColor()
+            h.makeHexagon()
+        })
+    }
+
+    class Hex {
+        constructor(id, x, y, radius, color) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+            this.isIncreasing = Math.random() > 0.5 ? true : false;
+        }
+
+
+
+        incrementColor() {
+
+            let upperBound = 255;
+            let lowerBound = 0;
+
+            if (this.color > lowerBound && this.color < upperBound) {
+                if (this.isIncreasing) {
+                    this.color++
+                    // this.isIncreasing = false;
+                } else {
+                    this.color--
+                    // this.isIncreasing = true;
+                }
+            }
+
+            if (this.color === upperBound) {
+                this.color--
+                this.isIncreasing = false
+            }
+            if (this.color === lowerBound) {
+                this.color++
+                this.isIncreasing = true
+            }
+
+        }
+
+        makeHexagon() {
+            p.fill(this.color);
+            p.noStroke();
+            p.angleMode(p.DEGREES);
+            p.beginShape();
+            for (let a = 30; a < 390; a += 60) {
+                let sx = this.x + p.cos(a) * this.radius;
+                let sy = this.y + p.sin(a) * this.radius;
+                p.vertex(sx, sy);
+            }
+            p.endShape(p.CLOSE);
+        }
+
+        display() {
+
+        }
+    }
 }
-
-
-
-
 
 
 export default sketch
