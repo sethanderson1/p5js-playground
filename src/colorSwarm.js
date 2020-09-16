@@ -8,21 +8,21 @@ const sketch = (p) => {
     const hex = [];
 
     p.setup = () => {
-        p.createCanvas(width, height * 0.992);
+        p.createCanvas(width, height * 0.993);
         p.frameRate(30)
         p.initHex()
     }
 
     p.initHex = async () => {
-        let space = 100; // x spacing
-        let hexWidth = 60;
+        let space = 300; // x spacing
+        let hexWidth = 173;
         let colLength = Math.ceil(width / space);
         let id = 0;
         let upperBound = 255;
-        let lowerBound = 220;
+        let lowerBound = 230;
         for (let y = 0; y < colLength; y++) {
             let py = y * space * p.sqrt(3) / 2; // y position
-            for (let x = 0; x < colLength; x++) {
+            for (let x = 0; x < colLength+1; x++) {
                 let color = p.random(lowerBound, upperBound);
                 if (y % 2 === 0) {
                     hex[id] = new Hex(id, x * space, py, hexWidth,
@@ -40,7 +40,7 @@ const sketch = (p) => {
     }
 
     p.draw = () => {
-        p.background(200);
+        p.background(255);
         hex.forEach((h) => {
             h.incrementColor()
             h.makeHexagon()
@@ -64,7 +64,7 @@ const sketch = (p) => {
         incrementColor() {
 
             if (this.color > this.lowerBound && this.color < this.upperBound) {
-                if (Math.random() > 0.7) {
+                if (Math.random() > 0.8) {
                     if (this.isIncreasing) {
                         this.color++;
                     } else {
@@ -84,7 +84,7 @@ const sketch = (p) => {
         }
 
         makeHexagon() {
-            p.fill(this.color);
+            p.fill(this.color,this.color,this.color,255);
             p.noStroke();
             p.angleMode(p.DEGREES);
             p.beginShape();
