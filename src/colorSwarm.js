@@ -15,14 +15,14 @@ const sketch = (p) => {
 
     p.initHex = async () => {
         let space = 300; // x spacing
-        let hexWidth = 173;
+        let hexWidth = 174;
         let colLength = Math.ceil(width / space);
         let id = 0;
         let upperBound = 255;
         let lowerBound = 230;
         for (let y = 0; y < colLength; y++) {
             let py = y * space * p.sqrt(3) / 2; // y position
-            for (let x = 0; x < colLength+1; x++) {
+            for (let x = 0; x < colLength + 1; x++) {
                 let color = p.random(lowerBound, upperBound);
                 if (y % 2 === 0) {
                     hex[id] = new Hex(id, x * space, py, hexWidth,
@@ -40,7 +40,7 @@ const sketch = (p) => {
     }
 
     p.draw = () => {
-        p.background(255);
+        p.background(100);
         hex.forEach((h) => {
             h.incrementColor()
             h.makeHexagon()
@@ -84,11 +84,11 @@ const sketch = (p) => {
         }
 
         makeHexagon() {
-            p.fill(this.color,this.color,this.color,255);
+            p.fill(this.color, this.color, this.color, 255);
             p.noStroke();
             p.angleMode(p.DEGREES);
             p.beginShape();
-            for (let a = 30; a < 390; a += 60) {
+            for (let a = 30; a < 390; a += Math.random() > 0.9 ? p.random(59, 61) : p.random(60, 60)) {
                 let sx = this.x + p.cos(a) * this.radius;
                 let sy = this.y + p.sin(a) * this.radius;
                 p.vertex(sx, sy);
