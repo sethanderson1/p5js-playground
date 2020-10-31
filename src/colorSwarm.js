@@ -22,7 +22,7 @@ const sketch = (p) => {
         let lowerBound = 230;
         for (let y = 0; y < colLength; y++) {
             let py = y * space * p.sqrt(3) / 2; // y position
-            for (let x = 0; x < colLength+1; x++) {
+            for (let x = 0; x < colLength + 1; x++) {
                 let color = p.random(lowerBound, upperBound);
                 if (y % 2 === 0) {
                     hex[id] = new Hex(id, x * space, py, hexWidth,
@@ -84,8 +84,11 @@ const sketch = (p) => {
         }
 
         makeHexagon() {
-            p.fill(this.color,this.color,this.color,255);
+            p.fill(this.color, this.color, this.color, 255);
             p.noStroke();
+            // p.strokeWeight(1);
+            // p.stroke(this.color/4,this.color/4,this.color/4,this.color/8);
+
             p.angleMode(p.DEGREES);
             p.beginShape();
             for (let a = 30; a < 390; a += 60) {
