@@ -14,7 +14,8 @@ const sketch = (p) => {
         Color2: '#0799f2',
         Color3: '#45217c',
         Length: 10,
-        Nums: 100,
+        // Length: 10,
+        Nums: 50,
         Size: 2,
         noiseScale: 800,
         ColorMode: 'Normal',
@@ -47,12 +48,14 @@ const sketch = (p) => {
 
 
     p.setup = () => {
-        p.frameRate(1);
-
+        // p.frameRate(10);
         backgroundColor = p.color(options.Background);
         p.createCanvas(p.windowWidth, p.windowHeight);
         p.background(options.Background);
-        for (let i = 0; i < 2500; i++) {
+        p.noiseSeed(99);
+
+        for (let i = 0; i < options.Nums; i++) {
+        // for (let i = 0; i < 2500; i++) {
             particles[i] = new Particle();
         }
 
@@ -71,7 +74,7 @@ const sketch = (p) => {
     };
 
     p.draw = () => {
-
+        // console.log('p.frameCount', p.frameCount)
         p.noStroke();
         p.smooth();
 
@@ -88,6 +91,9 @@ const sketch = (p) => {
             let fadeRatio;
             fadeRatio = p.min(particles[i].life * 5 / maxLife, 1);
             fadeRatio = p.min((maxLife - particles[i].life) * 5 / maxLife, fadeRatio);
+            // fadeRatio = fadeRatio/10;
+            // fadeRatio = p.min(particles[i].life * 5 / maxLife, 1);
+            // fadeRatio = p.min((maxLife - particles[i].life) * 5 / maxLife, fadeRatio);
             let lifeRatioGrayscale = p.min(255, (255 * particles[i].life / maxLife) + p.red(backgroundColor));
             if (options.ColorMode === 'Normal') {
                 if (i % 3 === 0) particleColor = options.Color1;
@@ -152,6 +158,8 @@ const sketch = (p) => {
 
 
     function Particle() {
+
+        this.z = 100;
         this.vel = p.createVector(0, 0);
         this.pos = p.createVector(p.random(-50, p.width + 50), p.random(-50, p.height + 50));
         this.life = p.random(0, maxLife);
@@ -160,7 +168,17 @@ const sketch = (p) => {
                 this.respawn();
             while (iterations > 0) {
 
-                let angle = p.noise(this.pos.x / options.noiseScale, this.pos.y / options.noiseScale) * p.TWO_PI * options.noiseScale;
+
+
+                // // gradually increments z
+                // if (p.frameCount % 10 === 0) {
+                //     this.z = this.z + 0.0001;
+                //     // console.log('this.z', this.z)
+                // }
+                this.z += 0.000001;
+
+
+                let angle = p.noise(this.pos.x / options.noiseScale, this.pos.y / options.noiseScale, this.z) * p.TWO_PI * options.noiseScale;
                 this.vel.x = p.cos(angle);
                 this.vel.y = p.sin(angle);
                 this.vel.mult(0.2);
