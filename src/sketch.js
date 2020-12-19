@@ -47,7 +47,7 @@ const sketch = (p) => {
 
 
     p.setup = () => {
-        // p.frameRate(1);
+        p.frameRate(1);
 
         backgroundColor = p.color(options.Background);
         p.createCanvas(p.windowWidth, p.windowHeight);
@@ -89,13 +89,13 @@ const sketch = (p) => {
             fadeRatio = p.min(particles[i].life * 5 / maxLife, 1);
             fadeRatio = p.min((maxLife - particles[i].life) * 5 / maxLife, fadeRatio);
             let lifeRatioGrayscale = p.min(255, (255 * particles[i].life / maxLife) + p.red(backgroundColor));
-            if (options.ColorMode == 'Normal') {
-                if (i % 3 == 0) particleColor = options.Color1;
-                if (i % 3 == 1) particleColor = options.Color2;
-                if (i % 3 == 2) particleColor = options.Color3;
+            if (options.ColorMode === 'Normal') {
+                if (i % 3 === 0) particleColor = options.Color1;
+                if (i % 3 === 1) particleColor = options.Color2;
+                if (i % 3 === 2) particleColor = options.Color3;
             }
 
-            if (options.ColorMode == 'Linera Gradient') {
+            if (options.ColorMode === 'Linera Gradient') {
                 let percent1 = p.norm(particles[i].pos.x, 0, p.width / 2);
                 let percent2 = p.norm(particles[i].pos.x, p.width / 2, p.width);
                 let from = p.color(options.Color1);
@@ -110,7 +110,7 @@ const sketch = (p) => {
                 }
             }
 
-            if (options.ColorMode == 'Radial Gradient') {
+            if (options.ColorMode === 'Radial Gradient') {
                 let distance = p.dist(particles[i].pos.x, particles[i].pos.y, p.width / 2, p.height / 2);
                 let percent1 = p.norm(distance, 0, 400);
                 let percent2 = p.norm(distance, 400, p.width / 2);
@@ -126,19 +126,19 @@ const sketch = (p) => {
                 }
             }
 
-            if (options.ColorMode == 'Splice') {
+            if (options.ColorMode === 'Splice') {
                 if (particles[i].pos.x >= p.width / 3 && particles[i].pos.x <= p.width / 3 * 2) {
-                    if (i % 3 == 0) particleColor = options.Color1;
-                    if (i % 3 == 1) particleColor = options.Color2;
-                    if (i % 3 == 2) particleColor = options.Color3;
+                    if (i % 3 === 0) particleColor = options.Color1;
+                    if (i % 3 === 1) particleColor = options.Color2;
+                    if (i % 3 === 2) particleColor = options.Color3;
                 } else if (particles[i].pos.x < p.width / 3) {
-                    if (i % 3 == 0) particleColor = 20;
-                    if (i % 3 == 1) particleColor = 100;
-                    if (i % 3 == 2) particleColor = 220;
+                    if (i % 3 === 0) particleColor = 20;
+                    if (i % 3 === 1) particleColor = 100;
+                    if (i % 3 === 2) particleColor = 220;
                 } else if (particles[i].pos.x > p.width / 3 * 2) {
-                    if (i % 3 == 0) particleColor = p.color(255 - p.red(options.Color1), 255 - p.green(options.Color1), 255 - p.blue(options.Color1));
-                    if (i % 3 == 1) particleColor = p.color(255 - p.red(options.Color2), 255 - p.green(options.Color2), 255 - p.blue(options.Color2));
-                    if (i % 3 == 2) particleColor = p.color(255 - p.red(options.Color3), 255 - p.green(options.Color3), 255 - p.blue(options.Color3));
+                    if (i % 3 === 0) particleColor = p.color(255 - p.red(options.Color1), 255 - p.green(options.Color1), 255 - p.blue(options.Color1));
+                    if (i % 3 === 1) particleColor = p.color(255 - p.red(options.Color2), 255 - p.green(options.Color2), 255 - p.blue(options.Color2));
+                    if (i % 3 === 2) particleColor = p.color(255 - p.red(options.Color3), 255 - p.green(options.Color3), 255 - p.blue(options.Color3));
                 }
             }
 
