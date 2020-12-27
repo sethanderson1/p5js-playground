@@ -6,7 +6,7 @@ const sketch = (p) => {
     const bars = [];
     p.setup = () => {
         // p.frameRate(1);
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 300; i++) {
             bars[i] = new Bar();
         }
         p.createCanvas(p.windowWidth, p.windowHeight);
