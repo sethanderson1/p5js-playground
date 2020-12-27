@@ -24,11 +24,11 @@ const sketch = (p) => {
 
     const options = {
         Colors: {
-            color1: '#4a4e4daa',
-            color2: '#0e9aa7aa',
-            color3: '#3da4abaa',
-            color4: '#f6cd61aa',
-            color5: '#fe8a71aa',
+            color1: '#4a4e4d',
+            color2: '#0e9aa7',
+            color3: '#3da4ab',
+            color4: '#f6cd61',
+            color5: '#fe8a71',
         }
     }
     class Bar {
