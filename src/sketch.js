@@ -6,7 +6,7 @@ const sketch = (p) => {
     const bars = [];
     p.setup = () => {
         // p.frameRate(1);
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 100; i++) {
             bars[i] = new Bar();
         }
         p.createCanvas(p.windowWidth, p.windowHeight);
@@ -35,8 +35,8 @@ const sketch = (p) => {
         constructor() {
             this.xPos = p.random(0, p.windowWidth);
             this.yPos = p.random(0, p.windowHeight);
-            this.xVel = p.random(1, 3);
-            this.yVel = p.random(1, 3);
+            this.xVel = p.random(1, 12);
+            this.yVel = p.random(1, 12);
             this.direction = p.random(-1, 1) > 0 ? 'horizontal' : 'vertical';
             this.color = p.random([
                 options.Colors.color1,
@@ -52,21 +52,21 @@ const sketch = (p) => {
             p.smooth();
             p.fill(this.color);
             if (this.direction === 'horizontal') {
-                p.rect(this.xPos, this.yPos, 500, 100);
+                p.rect(this.xPos, this.yPos, 1000, 80);
             } else {
-                p.rect(this.xPos, this.yPos, 100, 500);
+                p.rect(this.xPos, this.yPos, 80, 1000);
             }
         }
 
         // setting the bar in motion.
         moveBar() {
             if (this.direction === 'horizontal') {
-                if (this.xPos < -800 || this.xPos > p.windowWidth + 800) {
+                if (this.xPos < -1400 || this.xPos > p.windowWidth + 1400) {
                     this.xVel *= -1;
                 }
                 this.xPos += this.xVel;
             } else {
-                if (this.yPos < -800 || this.yPos > p.windowHeight + 800) {
+                if (this.yPos < -1400 || this.yPos > p.windowHeight + 1400) {
                     this.yVel *= -1;
                 }
                 this.yPos += this.yVel;
