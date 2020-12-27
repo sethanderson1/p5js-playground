@@ -6,7 +6,7 @@ const sketch = (p) => {
     const bars = [];
     p.setup = () => {
         // p.frameRate(1);
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 666; i++) {
             bars[i] = new Bar();
         }
         p.createCanvas(p.windowWidth, p.windowHeight);
@@ -51,10 +51,10 @@ const sketch = (p) => {
         constructor() {
             // this.xPos = p.random(0, p.windowWidth);
             // this.yPos = p.random(0, p.windowHeight);
-            this.xPos = p.random(xSlots(8));
-            this.yPos = p.random(ySlots(6));
-            this.xVel = p.random(1, 12);
-            this.yVel = p.random(1, 12);
+            this.xPos = p.random(xSlots(16));
+            this.yPos = p.random(ySlots(12));
+            this.xVel = p.random(0.5, 6);
+            this.yVel = p.random(0.5, 6);
             this.direction = p.random(-1, 1) > 0 ? 'horizontal' : 'vertical';
             this.color = p.random([
                 options.Colors.color1,
@@ -70,9 +70,9 @@ const sketch = (p) => {
             p.smooth();
             p.fill(this.color);
             if (this.direction === 'horizontal') {
-                p.rect(this.xPos, this.yPos, 1500, 130);
+                p.rect(this.xPos, this.yPos, 1500, 65);
             } else {
-                p.rect(this.xPos, this.yPos, 130, 1500);
+                p.rect(this.xPos, this.yPos, 65, 1500);
             }
         }
 
