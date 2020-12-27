@@ -12,7 +12,8 @@ const sketch = (p) => {
         Background: '#0a0a0a',
         Color1: '#ffffff',
         Color2: '#0799f2',
-        Color3: '#45217c',
+        Color3: '#0a0a0a',
+        // Color3: '#45217c',
         Length: 10,
         // Length: 10,
         Nums: 50,
@@ -48,7 +49,7 @@ const sketch = (p) => {
 
 
     p.setup = () => {
-        // p.frameRate(10);
+        // p.frameRate(1);
         backgroundColor = p.color(options.Background);
         p.createCanvas(p.windowWidth, p.windowHeight);
         p.background(options.Background);
@@ -81,6 +82,8 @@ const sketch = (p) => {
         maxLife = options.Length;
         for (let i = 1; i < options.Nums; i++) {
             let iterations = p.map(i, 0, options.Nums, 5, 1);
+            // iterations =10;
+            // console.log('iterations',i, iterations)
             let radius = options.Size;
 
             particles[i].move(iterations);
@@ -164,9 +167,11 @@ const sketch = (p) => {
         this.pos = p.createVector(p.random(-50, p.width + 50), p.random(-50, p.height + 50));
         this.life = p.random(0, maxLife);
         this.move = function (iterations) {
+            // iterations = 10;
             if ((this.life -= 0.01666) < 0)
                 this.respawn();
             while (iterations > 0) {
+            // console.log('iterations', iterations)
 
 
 
@@ -175,7 +180,7 @@ const sketch = (p) => {
                 //     this.z = this.z + 0.0001;
                 //     // console.log('this.z', this.z)
                 // }
-                this.z += 0.000001;
+                this.z += 0.00000001;
 
 
                 let angle = p.noise(this.pos.x / options.noiseScale, this.pos.y / options.noiseScale, this.z) * p.TWO_PI * options.noiseScale;
