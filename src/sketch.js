@@ -57,8 +57,9 @@ const sketch = (p) => {
     var clrs = colorSchemes[0];
 
     p.setup = () => {
-        p.createCanvas(wdt, hgt);
-        p.rectMode('CENTER');
+        // p.createCanvas(wdt, hgt);
+        p.createCanvas(width,height);
+        p.rectMode(p.CENTER);
         p.noStroke();
         p.noLoop();
     }
@@ -188,10 +189,13 @@ const sketch = (p) => {
         p.push();
         p.strokeWeight(1);
         p.noStroke();
-        const grainSize = p.random([2])
+        const grayScaleLower = 205 - 40;
+        const grayScaleUpper = 205 + 30;
+        const alphaVal = 25;
+        const grainSize = 2;
         for (var i = 0; i < width - 1; i += grainSize) {
             for (var j = 0; j < height - 1; j += grainSize) {
-                p.fill(p.random(205 - 40, 205 + 30), 25);
+                p.fill(p.random(grayScaleLower, grayScaleUpper), alphaVal);
                 // p.fill(p.random(205 - 40, 205 + 30), 25);
                 p.rect(i, j, grainSize, grainSize);
             }
@@ -204,6 +208,27 @@ const sketch = (p) => {
 
         p.pop();
     }
+
+    // function paper() {
+    //     p.push();
+    //     p.strokeWeight(1);
+    //     p.noStroke();
+    //     const grainSize = p.random([2])
+    //     for (var i = 0; i < width - 1; i += grainSize) {
+    //         for (var j = 0; j < height - 1; j += grainSize) {
+    //             p.fill(p.random(205 - 40, 205 + 30), 25);
+    //             // p.fill(p.random(205 - 40, 205 + 30), 25);
+    //             p.rect(i, j, grainSize, grainSize);
+    //         }
+    //     }
+
+    //     for (var i = 0; i < 30; i++) {
+    //         p.fill(p.random(130, 215), p.random(100, 170));
+    //         p.rect(p.random(0, width - 2), p.random(0, height - 2), p.random(1, 3), p.random(1, 3));
+    //     }
+
+    //     p.pop();
+    // }
 
 }
 
