@@ -1,27 +1,52 @@
-// rectangles sliding up and down
+// rectangles sliding up and down left and right
 
 const sketch = (p) => {
-
     // an array to add multiple bars
     const bars = [];
+    let barCount = 300;
+    let alpha = '33';
+    let directionOptions = ['horizontal']
+    // let directionOptions = ['horizontal','vertical']
+
+    let xLeftWall = -2200;
+    let xRightWall = 2200;
+    let yBottomWall = -2200;
+    let yTopWall = 2200;
+
+    let barHeightUpperBound = 1200;
+    let barHeightLowerBound = 500;
+    let barWidth = 100;
+    let barHeight = p.random(barHeightLowerBound,barHeightUpperBound);
+    // let barHeight = 1000;
+    // let maxBarWidth = 200;
+    // let maxBarHeight = 200;
+    let xVelLowerBound = 0.5;
+    let xVelUpperBound = 3;
+    let yVelLowerBound = 0.5;
+    let yVelUpperBound = 3;
+
+    let xSlotCount = p.windowWidth / barWidth;
+    // console.log('xSlotCount', xSlotCount)
+    let ySlotCount = p.windowHeight / barWidth;
+    // console.log('ySlotCount', ySlotCount)
+
+
     p.setup = () => {
         // p.frameRate(1);
-        for (let i = 0; i < 666; i++) {
+        for (let i = 0; i < barCount; i++) {
             bars[i] = new Bar();
         }
         p.createCanvas(p.windowWidth, p.windowHeight);
-        p.background('#fff');
+        p.background(options.BackgroundColor);
     }
 
     p.draw = () => {
-        p.background('#fff');
+        p.background(options.BackgroundColor);
         for (let i = 0; i < bars.length; i++) {
-            bars[i].createBar();
-            bars[i].moveBar();
+            bars[i].move();
+            bars[i].display();
         }
     }
-
-
 
     const xSlots = (numSlots) => {
         const slots = [];
@@ -39,47 +64,50 @@ const sketch = (p) => {
         }
         return slots;
     }
+
     class Bar {
         constructor() {
             // this.xPos = p.random(0, p.windowWidth);
             // this.yPos = p.random(0, p.windowHeight);
-            this.xPos = p.random(xSlots(16));
-            this.yPos = p.random(ySlots(12));
-            this.xVel = p.random(0.5, 6);
-            this.yVel = p.random(0.5, 6);
-            this.direction = p.random(-1, 1) > 0 ? 'horizontal' : 'vertical';
+            this.xPos = p.random(xSlots(xSlotCount));
+            this.yPos = p.random(ySlots(ySlotCount));
+            this.xVel = p.random(xVelLowerBound, xVelUpperBound);
+            this.yVel = p.random(yVelLowerBound, yVelUpperBound);
+            this.direction = p.random(directionOptions);
             this.color = p.random([
-                options.Colors.color1,
-                options.Colors.color2,
-                options.Colors.color3,
-                options.Colors.color4,
-                options.Colors.color5,
+                options.BarColors.color1 + alpha,
+                options.BarColors.color2 + alpha,
+                options.BarColors.color3 + alpha,
+                options.BarColors.color4 + alpha,
+                options.BarColors.color5 + alpha,
             ]);
         }
 
-        createBar() {
-            p.noStroke();
-            p.smooth();
-            p.fill(this.color);
-            if (this.direction === 'horizontal') {
-                p.rect(this.xPos, this.yPos, 1500, 65);
-            } else {
-                p.rect(this.xPos, this.yPos, 65, 1500);
-            }
-        }
+
 
         // setting the bar in motion.
-        moveBar() {
+        move() {
             if (this.direction === 'horizontal') {
-                if (this.xPos < -2200 || this.xPos > p.windowWidth + 2200) {
+                if (this.xPos < xLeftWall || this.xPos > p.windowWidth + xRightWall) {
                     this.xVel *= -1;
                 }
                 this.xPos += this.xVel;
             } else {
-                if (this.yPos < -2200 || this.yPos > p.windowHeight + 2200) {
+                if (this.yPos < yBottomWall || this.yPos > p.windowHeight + yTopWall) {
                     this.yVel *= -1;
                 }
                 this.yPos += this.yVel;
+            }
+        }
+
+        display() {
+            p.noStroke();
+            p.smooth();
+            p.fill(this.color);
+            if (this.direction === 'horizontal') {
+                p.rect(this.xPos, this.yPos, barHeight, barWidth);
+            } else {
+                p.rect(this.xPos, this.yPos, barWidth, barHeight);
             }
         }
     }
@@ -95,12 +123,13 @@ export default sketch;
 
 
 const options = {
-    Colors: {
-        color1: '#4a4e4d33',
-        color2: '#0e9aa733',
-        color3: '#3da4ab33',
-        color4: '#f6cd6133',
-        color5: '#fe8a7133',
-    }
+    BarColors: {
+        color1: '#4a4e4d',
+        color2: '#0e9aa7',
+        color3: '#3da4ab',
+        color4: '#f6cd61',
+        color5: '#fe8a71',
+    },
+    BackgroundColor: '#fff',
 }
 
