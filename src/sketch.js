@@ -31,7 +31,7 @@ const sketch = (p) => {
 
     let height = p.windowHeight;
     let width = p.windowWidth;
-    var blockSize = 200;
+    var blockSize = 100;
     var countBorder = 9;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
@@ -40,7 +40,18 @@ const sketch = (p) => {
     var colorSchemes = [
         ['#152A3B', '#158ca7', '#F5C03E', '#D63826', '#F5F5EB'],
         ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
-        ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331']
+        ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
+        // ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6', '#152A3B'],
+        // ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5', '#0F4155'],
+        // ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331', '#E8614F'],
+        // ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55', '#DBE5EC'],
+        // ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967', '#8A867F'],
+        // ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D', '#507A4A'],
+        // ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F', '#234D51'],
+        // ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F', '#FF4858'],
+        // ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F', '#2A5A26'],
+        // ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950', '#0B1C26'],
+        // ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B', '#A6BF5B'],
     ];
     var queueNum = [0, 1, 2, 3, 4];
     var clrs = colorSchemes[0];
@@ -52,7 +63,7 @@ const sketch = (p) => {
         p.noLoop();
     }
 
-    p.draw= () => {
+    p.draw = () => {
         p.background(25);
         for (var y = blockSize / 2; y < height; y += blockSize) {
             for (var x = blockSize / 2; x < width; x += blockSize) {
@@ -155,11 +166,11 @@ const sketch = (p) => {
         p.redraw();
     }
 
-    function mousePressed() {
+    p.mousePressed = () => {
         resetPatchwork();
     }
 
-    function keyPressed(e) {
+    p.keyPressed = (e) => {
         switch (e.key.toLowerCase()) {
             case '1': resetPatchwork(semiDual); break;
             case '2': resetPatchwork(shark); break;
