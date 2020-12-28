@@ -29,8 +29,9 @@ const sketch = (p) => {
     //    https://www.facebook.com/epistolariy                              //
     //////////////////////////////////////////////////////////////////////////
 
-    let height = p.
-    var blockSize = 50;
+    let height = p.windowHeight;
+    let width = p.windowWidth;
+    var blockSize = 200;
     var countBorder = 9;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
@@ -55,13 +56,13 @@ const sketch = (p) => {
         p.background(25);
         for (var y = blockSize / 2; y < height; y += blockSize) {
             for (var x = blockSize / 2; x < width; x += blockSize) {
-                queueNum = p.shuffleArray([0, 1, 2, 3, 4]);
+                queueNum = shuffleArray([0, 1, 2, 3, 4]);
                 p.fill(clrs[queueNum[0]]);
                 p.rect(x, y, blockSize, blockSize);
 
                 p.push();
                 p.translate(x, y);
-                p.currModeFn(0, 0, clrs);
+                currModeFn(0, 0, clrs);
                 p.pop();
             }
         }
@@ -151,7 +152,7 @@ const sketch = (p) => {
     function resetPatchwork(modeFn) {
         currModeFn = modeFn || modes[Math.floor(p.random(modes.length))];
         clrs = colorSchemes[Math.floor(p.random(colorSchemes.length))];
-        redraw();
+        p.redraw();
     }
 
     function mousePressed() {
@@ -167,7 +168,7 @@ const sketch = (p) => {
             case '5': resetPatchwork(rotateSemi); break;
             case '6': resetPatchwork(pear); break;
             case '7': resetPatchwork(chain); break;
-            case 's': save('img_' + ~~p.random(100, 900) + '.jpg'); break;
+            case 's': p.save('img_' + ~~p.random(100, 900) + '.jpg'); break;
             default: resetPatchwork(); break;
         }
     }
