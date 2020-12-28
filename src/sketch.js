@@ -3,21 +3,21 @@
 const sketch = (p) => {
     // an array to add multiple bars
     const bars = [];
-    let barCount = 300;
-    let alpha = '33';
+    let barCount = 600;
+    let alpha = '99';
     let directionOptions = ['horizontal']
     // let directionOptions = ['horizontal','vertical']
 
-    let xLeftWall = -2200;
-    let xRightWall = 2200;
+    let xLeftWall = -1500;
+    let xRightWall = 1000;
     let yBottomWall = -2200;
     let yTopWall = 2200;
 
-    let barHeightUpperBound = 1200;
-    let barHeightLowerBound = 500;
-    let barWidth = 100;
-    let barHeight = p.random(barHeightLowerBound,barHeightUpperBound);
-    // let barHeight = 1000;
+    let barLengthUpperBound = 1200;
+    let barLengthLowerBound = 500;
+    let barWidth = 50;
+    let barLength = p.random(barLengthLowerBound, barLengthUpperBound);
+    // let barLength = 1000;
     // let maxBarWidth = 200;
     // let maxBarHeight = 200;
     let xVelLowerBound = 0.5;
@@ -81,6 +81,7 @@ const sketch = (p) => {
                 options.BarColors.color4 + alpha,
                 options.BarColors.color5 + alpha,
             ]);
+            this.barWidth = barWidth;
         }
 
 
@@ -104,10 +105,11 @@ const sketch = (p) => {
             p.noStroke();
             p.smooth();
             p.fill(this.color);
+            // this.barWidth += p.random([-0.1, 0.1]);
             if (this.direction === 'horizontal') {
-                p.rect(this.xPos, this.yPos, barHeight, barWidth);
+                p.rect(this.xPos, this.yPos, barLength, this.barWidth);
             } else {
-                p.rect(this.xPos, this.yPos, barWidth, barHeight);
+                p.rect(this.xPos, this.yPos, barWidth, barLength);
             }
         }
     }
