@@ -31,16 +31,16 @@ const sketch = (p) => {
 
     let height = p.windowHeight;
     let width = p.windowWidth;
-    var blockSize = 100;
-    var countBorder = 9;
+    var blockSize = 200;
+    var countBorder = 4;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
     var modes = [semiDual, shark, oneSemi, mess, rotateSemi, pear, chain];
     var currModeFn = semiDual;
     var colorSchemes = [
+        ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
         ['#152A3B', '#158ca7', '#F5C03E', '#D63826', '#F5F5EB'],
         ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
-        ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
         // ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6', '#152A3B'],
         // ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5', '#0F4155'],
         // ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331', '#E8614F'],
@@ -188,10 +188,12 @@ const sketch = (p) => {
         p.push();
         p.strokeWeight(1);
         p.noStroke();
-        for (var i = 0; i < width - 1; i += 2) {
-            for (var j = 0; j < height - 1; j += 2) {
+        const grainSize = p.random([2])
+        for (var i = 0; i < width - 1; i += grainSize) {
+            for (var j = 0; j < height - 1; j += grainSize) {
                 p.fill(p.random(205 - 40, 205 + 30), 25);
-                p.rect(i, j, 2, 2);
+                // p.fill(p.random(205 - 40, 205 + 30), 25);
+                p.rect(i, j, grainSize, grainSize);
             }
         }
 
