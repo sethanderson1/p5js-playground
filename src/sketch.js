@@ -21,15 +21,7 @@ const sketch = (p) => {
         }
     }
 
-    const options = {
-        Colors: {
-            color1: '#4a4e4d33',
-            color2: '#0e9aa733',
-            color3: '#3da4ab33',
-            color4: '#f6cd6133',
-            color5: '#fe8a7133',
-        }
-    }
+
 
     const xSlots = (numSlots) => {
         const slots = [];
@@ -95,10 +87,20 @@ const sketch = (p) => {
 }
 
 
+
 export default sketch;
 
 
 
 
 
+const options = {
+    Colors: {
+        color1: '#4a4e4d33',
+        color2: '#0e9aa733',
+        color3: '#3da4ab33',
+        color4: '#f6cd6133',
+        color5: '#fe8a7133',
+    }
+}
 
