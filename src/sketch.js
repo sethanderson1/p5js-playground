@@ -3,8 +3,8 @@
 const sketch = (p) => {
     // an array to add multiple bars
     const bars = [];
-    let barCount = 600;
-    let alpha = '99';
+    let barCount = 500;
+    let alpha = 'ff';
     let directionOptions = ['horizontal']
     // let directionOptions = ['horizontal','vertical']
 
@@ -14,8 +14,8 @@ const sketch = (p) => {
     let yTopWall = 2200;
 
     let barLengthUpperBound = 1200;
-    let barLengthLowerBound = 500;
-    let barWidth = 50;
+    let barLengthLowerBound = 800;
+    let barWidth = 100;
     let barLength = p.random(barLengthLowerBound, barLengthUpperBound);
     // let barLength = 1000;
     // let maxBarWidth = 200;
@@ -125,13 +125,21 @@ export default sketch;
 
 
 const options = {
+    // BarColors: {
+    //     color1: '#4a4e4d',
+    //     color2: '#0e9aa7',
+    //     color3: '#3da4ab',
+    //     color4: '#f6cd61',
+    //     color5: '#fe8a71',
+    // },
     BarColors: {
-        color1: '#4a4e4d',
-        color2: '#0e9aa7',
-        color3: '#3da4ab',
-        color4: '#f6cd61',
-        color5: '#fe8a71',
+        color1: '#E8614F',
+        color2: '#F3F2DB',
+        color3: '#79C3A7',
+        color4: '#668065',
+        color5: '#4B3331',
     },
+
     BackgroundColor: '#fff',
 }
 
