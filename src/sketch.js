@@ -32,7 +32,7 @@ const sketch = (p) => {
     let height = p.windowHeight;
     let width = p.windowWidth;
     var blockSize = 200;
-    var countBorder = 4;
+    var countBorder = 3;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
     var modes = [semiDual, shark, oneSemi, mess, rotateSemi, pear, chain];
@@ -57,8 +57,8 @@ const sketch = (p) => {
     var clrs = colorSchemes[0];
 
     p.setup = () => {
-        // p.createCanvas(wdt, hgt);
-        p.createCanvas(width,height);
+        p.createCanvas(wdt, hgt);
+        // p.createCanvas(width,height);
         p.rectMode(p.CENTER);
         p.noStroke();
         p.noLoop();
@@ -78,6 +78,7 @@ const sketch = (p) => {
                 p.pop();
             }
         }
+        console.log(p.frameCount)
         paper();
     }
 
@@ -189,9 +190,11 @@ const sketch = (p) => {
         p.push();
         p.strokeWeight(1);
         p.noStroke();
-        const grayScaleLower = 205 - 40;
-        const grayScaleUpper = 205 + 30;
-        const alphaVal = 25;
+        const grayScaleLower = 165;
+        const grayScaleUpper = 235;
+        // const grayScaleLower = 165;
+        // const grayScaleUpper = 235;
+        const alphaVal =25;
         const grainSize = 2;
         for (var i = 0; i < width - 1; i += grainSize) {
             for (var j = 0; j < height - 1; j += grainSize) {

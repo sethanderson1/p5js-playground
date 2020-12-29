@@ -15,7 +15,12 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{
+      height:'100vh',
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
+    }}>
       <main>
         <section>
           <div ref={sketchDomElement}>
