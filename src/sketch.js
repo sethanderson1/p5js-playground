@@ -1,38 +1,35 @@
-// rectangles sliding up and down left and right
-
+//////////////////////////////////////////////////////////////////////////
+//                       //                                             //
+//   -~=Manoylov AC=~-   //           Semi Circle Patchwork             //
+//                       //                                             //
+//////////////////////////////////////////////////////////////////////////
+//                                                                      //
+// Controls:                                                            //
+//    mouse                                                             //
+//      click: generate new patchwork                                   //
+//                                                                      //
+//    keyboard                                                          //
+//       's': save image                                                //
+//       '1': modeFn - semiDual                                         //
+//       '2': modeFn - shark                                            //
+//       '3': modeFn - oneSemi                                          //
+//       '4': modeFn - mess                                             //
+//       '5': modeFn - rotateSemi                                       //
+//       '6': modeFn - pear                                             //
+//       '7': modeFn - chain                                            //
+//////////////////////////////////////////////////////////////////////////
+//                                                                      //
+// Contacts:                                                            //
+//    http://manoylov.tumblr.com/                                       //
+//    https://codepen.io/Manoylov/                                      //
+//    https://www.openprocessing.org/user/23616/                        //
+//    https://www.facebook.com/epistolariy                              //
+//////////////////////////////////////////////////////////////////////////
 const sketch = (p) => {
-    //////////////////////////////////////////////////////////////////////////
-    //                       //                                             //
-    //   -~=Manoylov AC=~-   //           Semi Circle Patchwork             //
-    //                       //                                             //
-    //////////////////////////////////////////////////////////////////////////
-    //                                                                      //
-    // Controls:                                                            //
-    //    mouse                                                             //
-    //      click: generate new patchwork                                   //
-    //                                                                      //
-    //    keyboard                                                          //
-    //       's': save image                                                //
-    //       '1': modeFn - semiDual                                         //
-    //       '2': modeFn - shark                                            //
-    //       '3': modeFn - oneSemi                                          //
-    //       '4': modeFn - mess                                             //
-    //       '5': modeFn - rotateSemi                                       //
-    //       '6': modeFn - pear                                             //
-    //       '7': modeFn - chain                                            //
-    //////////////////////////////////////////////////////////////////////////
-    //                                                                      //
-    // Contacts:                                                            //
-    //    http://manoylov.tumblr.com/                                       //
-    //    https://codepen.io/Manoylov/                                      //
-    //    https://www.openprocessing.org/user/23616/                        //
-    //    https://www.facebook.com/epistolariy                              //
-    //////////////////////////////////////////////////////////////////////////
-
     let height = p.windowHeight;
     let width = p.windowWidth;
-    var blockSize = 200;
-    var countBorder = 3;
+    var blockSize = 120;
+    var countBorder = 6;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
     var modes = [semiDual, shark, oneSemi, mess, rotateSemi, pear, chain];
@@ -41,17 +38,16 @@ const sketch = (p) => {
         ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
         ['#152A3B', '#158ca7', '#F5C03E', '#D63826', '#F5F5EB'],
         ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
-        // ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6', '#152A3B'],
-        // ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5', '#0F4155'],
-        // ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331', '#E8614F'],
-        // ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55', '#DBE5EC'],
-        // ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967', '#8A867F'],
-        // ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D', '#507A4A'],
-        // ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F', '#234D51'],
-        // ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F', '#FF4858'],
-        // ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F', '#2A5A26'],
-        // ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950', '#0B1C26'],
-        // ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B', '#A6BF5B'],
+        ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6'],
+        ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5'],
+        ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55'],
+        ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967'],
+        ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D'],
+        ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F'],
+        ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950'],
+        ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F'],
+        ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F'],
+        ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B'],
     ];
     var queueNum = [0, 1, 2, 3, 4];
     var clrs = colorSchemes[0];
@@ -194,7 +190,7 @@ const sketch = (p) => {
         const grayScaleUpper = 235;
         // const grayScaleLower = 165;
         // const grayScaleUpper = 235;
-        const alphaVal =25;
+        const alphaVal = 25;
         const grainSize = 2;
         for (var i = 0; i < width - 1; i += grainSize) {
             for (var j = 0; j < height - 1; j += grainSize) {
@@ -238,19 +234,3 @@ const sketch = (p) => {
 
 
 export default sketch;
-
-
-
-
-
-const options = {
-    BarColors: {
-        color1: '#4a4e4d',
-        color2: '#0e9aa7',
-        color3: '#3da4ab',
-        color4: '#f6cd61',
-        color5: '#fe8a71',
-    },
-    BackgroundColor: '#fff',
-}
-
