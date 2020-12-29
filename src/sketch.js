@@ -26,10 +26,10 @@
 //    https://www.facebook.com/epistolariy                              //
 //////////////////////////////////////////////////////////////////////////
 const sketch = (p) => {
-    let height = p.windowHeight;
     let width = p.windowWidth;
-    var blockSize = 120;
-    var countBorder = 6;
+    let height = p.windowHeight;
+    var blockSize = 400;
+    var countBorder = 3;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
     var modes = [semiDual, shark, oneSemi, mess, rotateSemi, pear, chain];
@@ -62,8 +62,10 @@ const sketch = (p) => {
 
     p.draw = () => {
         p.background(25);
-        for (var y = blockSize / 2; y < height; y += blockSize) {
-            for (var x = blockSize / 2; x < width; x += blockSize) {
+        for (var y = blockSize / 2; y < hgt; y += blockSize) {
+            for (var x = blockSize / 2; x < wdt; x += blockSize) {
+        // for (var y = blockSize / 2; y < height; y += blockSize) {
+        //     for (var x = blockSize / 2; x < width; x += blockSize) {
                 queueNum = shuffleArray([0, 1, 2, 3, 4]);
                 p.fill(clrs[queueNum[0]]);
                 p.rect(x, y, blockSize, blockSize);
@@ -192,8 +194,10 @@ const sketch = (p) => {
         // const grayScaleUpper = 235;
         const alphaVal = 25;
         const grainSize = 2;
-        for (var i = 0; i < width - 1; i += grainSize) {
-            for (var j = 0; j < height - 1; j += grainSize) {
+        for (var i = 0; i < wdt - 1; i += grainSize) {
+            for (var j = 0; j < hgt - 1; j += grainSize) {
+        // for (var i = 0; i < width - 1; i += grainSize) {
+        //     for (var j = 0; j < height - 1; j += grainSize) {
                 p.fill(p.random(grayScaleLower, grayScaleUpper), alphaVal);
                 // p.fill(p.random(205 - 40, 205 + 30), 25);
                 p.rect(i, j, grainSize, grainSize);
@@ -202,7 +206,8 @@ const sketch = (p) => {
 
         for (var i = 0; i < 30; i++) {
             p.fill(p.random(130, 215), p.random(100, 170));
-            p.rect(p.random(0, width - 2), p.random(0, height - 2), p.random(1, 3), p.random(1, 3));
+            p.rect(p.random(0, wdt - 2), p.random(0, hgt - 2), p.random(1, 3), p.random(1, 3));
+            // p.rect(p.random(0, width - 2), p.random(0, height - 2), p.random(1, 3), p.random(1, 3));
         }
 
         p.pop();
