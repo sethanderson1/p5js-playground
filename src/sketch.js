@@ -26,33 +26,36 @@
 //    https://www.facebook.com/epistolariy                              //
 //////////////////////////////////////////////////////////////////////////
 const sketch = (p) => {
+    var blockSize = 300;
+    var countBorder = 2;
+    // let height = blockSize * countBorder;
+    // let width = blockSize * countBorder;
     let height = p.windowHeight;
     let width = p.windowWidth;
-    var blockSize = 120;
-    var countBorder = 6;
     var wdt = blockSize * countBorder;
     var hgt = blockSize * countBorder;
     var modes = [semiDual, shark, oneSemi, mess, rotateSemi, pear, chain];
-    var currModeFn = semiDual;
+    var currModeFn = oneSemi;
     var colorSchemes = [
-        ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
         ['#152A3B', '#158ca7', '#F5C03E', '#D63826', '#F5F5EB'],
-        ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
-        ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6'],
-        ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5'],
-        ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55'],
-        ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967'],
-        ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D'],
-        ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F'],
-        ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950'],
-        ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F'],
-        ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F'],
-        ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B'],
+        // ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
+        // ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
+        // ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6'],
+        // ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5'],
+        // ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55'],
+        // ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967'],
+        // ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D'],
+        // ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F'],
+        // ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950'],
+        // ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F'],
+        // ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F'],
+        // ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B'],
     ];
     var queueNum = [0, 1, 2, 3, 4];
     var clrs = colorSchemes[0];
 
     p.setup = () => {
+        p.frameRate(1 / 4);
         p.createCanvas(wdt, hgt);
         // p.createCanvas(width,height);
         p.rectMode(p.CENTER);
@@ -62,21 +65,60 @@ const sketch = (p) => {
 
     p.draw = () => {
         p.background(25);
-        for (var y = blockSize / 2; y < height; y += blockSize) {
-            for (var x = blockSize / 2; x < width; x += blockSize) {
+        for (var y = blockSize / 2; y < hgt; y += blockSize) {
+            for (var x = blockSize / 2; x < wdt; x += blockSize) {
+                // for (var y = blockSize / 2; y < height; y += blockSize) {
+                //     for (var x = blockSize / 2; x < width; x += blockSize) {
                 queueNum = shuffleArray([0, 1, 2, 3, 4]);
-                p.fill(clrs[queueNum[0]]);
+                let clr = clrs[queueNum[0]];
+                console.log('clr', clr)
+                p.fill(clr);
                 p.rect(x, y, blockSize, blockSize);
-
                 p.push();
                 p.translate(x, y);
                 currModeFn(0, 0, clrs);
                 p.pop();
             }
         }
-        console.log(p.frameCount)
         paper();
     }
+
+    function oneSemi(x, y, clrs) {
+        const clr = p.random(clrs);
+        console.log('clr', clr)
+        if (p.random(1) > 0) {
+            p.fill(clr);
+            // p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(90), p.radians(-90));
+            p.arc(blockSize / 2 - x, y, blockSize, blockSize, p.radians(90), p.radians(-90));
+        }
+    }
+
+
+
+    // p.draw = () => {
+    //     p.background(25);
+    //     for (var y = blockSize / 2; y < height; y += blockSize) {
+    //         for (var x = blockSize / 2; x < width; x += blockSize) {
+    //             queueNum = shuffleArray([0, 1, 2, 3, 4]);
+    //             p.fill(clrs[queueNum[0]]);
+    //             p.rect(x, y, blockSize, blockSize);
+    //             p.push();
+    //             p.translate(x, y);
+    //             currModeFn(0, 0, clrs);
+    //             p.pop();
+    //         }
+    //     }
+    //     paper();
+    // }
+
+    // function oneSemi(x, y, clrs) {
+    //     if (p.random(1) > 0) {
+    //         // if (p.random(1) > 0.2) {
+    //         p.fill(clrs[queueNum[Math.floor(p.random(queueNum.length))]]);
+    //         p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(90), p.radians(-90));
+    //         // p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(270), p.radians(450));
+    //     }
+    // }
 
     function chain(x, y, clrs) {
         p.rotate(p.radians(90 * Math.round(p.random(1, 5))));
@@ -122,15 +164,8 @@ const sketch = (p) => {
         }
     }
 
-    function oneSemi(x, y, clrs) {
-        if (p.random(1) > .2) {
-            p.fill(clrs[queueNum[Math.floor(p.random(queueNum.length))]]);
-            p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(270), p.radians(450));
-        }
-    }
-
     function shark(x, y, clrs) {
-        if (p.random(1) > .4) {
+        if (p.random(1) > 0.4) {
             p.fill(clrs[queueNum[Math.floor(p.random(queueNum.length))]]);
             p.arc(x, y + blockSize / 2, blockSize, blockSize, p.radians(270), p.radians(450));
         }
@@ -138,7 +173,7 @@ const sketch = (p) => {
 
     function semiDual(x, y, clrs) {
         p.rotate(p.radians(90 * Math.round(p.random(1, 5))));
-        if (p.random() > .005) {
+        if (p.random() > 0.005) {
             p.fill(clrs[queueNum[1]]);
             p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(270), p.radians(450));
             p.fill(clrs[queueNum[2]]);
