@@ -26,8 +26,8 @@
 //    https://www.facebook.com/epistolariy                              //
 //////////////////////////////////////////////////////////////////////////
 const sketch = (p) => {
-    var blockSize = 300;
-    var countBorder = 2;
+    var blockSize = 100;
+    var countBorder = 6;
     // let height = blockSize * countBorder;
     // let width = blockSize * countBorder;
     let height = p.windowHeight;
@@ -66,17 +66,22 @@ const sketch = (p) => {
     p.draw = () => {
         p.background(25);
         for (var y = blockSize / 2; y < hgt; y += blockSize) {
+            let prevColor = p.random(clrs);
+            // let prevColor;
             for (var x = blockSize / 2; x < wdt; x += blockSize) {
                 // for (var y = blockSize / 2; y < height; y += blockSize) {
                 //     for (var x = blockSize / 2; x < width; x += blockSize) {
-                queueNum = shuffleArray([0, 1, 2, 3, 4]);
-                let clr = clrs[queueNum[0]];
-                console.log('clr', clr)
-                p.fill(clr);
+                // queueNum = shuffleArray([0, 1, 2, 3, 4]);
+
+                // let clr = p.random(clrs);
+                // console.log('clr', clr)
+                // p.fill(clr);
+                p.fill(prevColor);
                 p.rect(x, y, blockSize, blockSize);
                 p.push();
                 p.translate(x, y);
-                currModeFn(0, 0, clrs);
+                prevColor = currModeFn(0, 0, clrs);
+                console.log('prevColor', prevColor)
                 p.pop();
             }
         }
@@ -91,6 +96,7 @@ const sketch = (p) => {
             // p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(90), p.radians(-90));
             p.arc(blockSize / 2 - x, y, blockSize, blockSize, p.radians(90), p.radians(-90));
         }
+        return clr;
     }
 
 
@@ -200,7 +206,7 @@ const sketch = (p) => {
     }
 
     p.mousePressed = () => {
-        resetPatchwork();
+        resetPatchwork(oneSemi);
     }
 
     p.keyPressed = (e) => {
@@ -213,7 +219,7 @@ const sketch = (p) => {
             case '6': resetPatchwork(pear); break;
             case '7': resetPatchwork(chain); break;
             case 's': p.save('img_' + ~~p.random(100, 900) + '.jpg'); break;
-            default: resetPatchwork(); break;
+            default: resetPatchwork(oneSemi); break;
         }
     }
 
