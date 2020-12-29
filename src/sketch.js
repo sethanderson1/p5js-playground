@@ -80,7 +80,7 @@ const sketch = (p) => {
                 p.rect(x, y, blockSize, blockSize);
                 p.push();
                 p.translate(x, y);
-                prevColor = currModeFn(0, 0, clrs);
+                prevColor = currModeFn(0, 0, clrs,prevColor);
                 console.log('prevColor', prevColor)
                 p.pop();
             }
@@ -88,14 +88,18 @@ const sketch = (p) => {
         paper();
     }
 
-    function oneSemi(x, y, clrs) {
-        const clr = p.random(clrs);
-        console.log('clr', clr)
-        if (p.random(1) > 0) {
+    function oneSemi(x, y, clrs,prevColor) {
+        let clr;
+        if (p.random(1) > 0.4) {
+            clr = p.random(clrs);
+            console.log('clr', clr)
             p.fill(clr);
             // p.arc(x - blockSize / 2, y, blockSize, blockSize, p.radians(90), p.radians(-90));
             p.arc(blockSize / 2 - x, y, blockSize, blockSize, p.radians(90), p.radians(-90));
+        } else {
+            clr = prevColor
         }
+
         return clr;
     }
 
