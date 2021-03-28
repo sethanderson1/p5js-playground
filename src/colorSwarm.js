@@ -22,10 +22,10 @@ const sketch = p => {
     // blue and when two blue hit each other they turn red
 
     // TODO: do ball sizes in relation to browser width and height. calculate
-    const numBalls = 400;
+    const numBalls = 200;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameterInitial = 30;
+    const ballDiameterInitial = 35;
     // let ballDiameter = 20;
     const diameterChange = 0.999;
     const spring = 30;
@@ -34,11 +34,17 @@ const sketch = p => {
     const balls = [];
     const backgoundColor = 230;
     const alpha = 200;
-    const alphaBackground = 3
+    const alphaBackground = 2
     const alphaHex = '01'
-    const colorOne = colorSchemes[0][0] + alphaHex
-    const colorTwo = colorSchemes[0][1] + alphaHex
-    const colorThree = colorSchemes[0][2] + alphaHex
+    // const colorOne = colorSchemes[0][0] + alphaHex
+    // const colorTwo = colorSchemes[0][1] + alphaHex
+    // const colorThree = colorSchemes[0][2] + alphaHex
+    const colorOne =  '#F5C03E'+ alphaHex
+    const colorTwo = '#288791'+ alphaHex
+    const colorThree = '#BF7950'+ alphaHex
+    // const colorOne =  '#7AA5BF'+ alphaHex
+    // const colorTwo = '#A0C3D9'+ alphaHex
+    // const colorThree = '#BF7950'+ alphaHex
     // const colorOne = [150, 80, 80, alpha];
     // const colorTwo = [80, 150, 80, alpha];
     // const colorThree = [80, 80, 150, alpha];
@@ -90,21 +96,21 @@ const sketch = p => {
 
 
     p.setup = () => {
-        // p.frameRate(2);
+        // p.frameRate(10);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
         for (let i = 0; i < numBalls; i++) {
             // if (i >= Math.floor(1/3*numBalls)) {
-            if (i % 3 === 1) {
-                infectedOne = false;
-                infectedTwo = true;
-                infectedThree = false;
-                ballStartColor = colorTwo;
-            }
-            // if (i >= Math.floor(2/3*numBalls)) {
-            if (i % 3 === 2) {
-                infectedOne = false;
+                if (i % 3 === 1) {
+                    infectedOne = false;
+                    infectedTwo = true;
+                    infectedThree = false;
+                    ballStartColor = colorTwo;
+                }
+                // if (i >= Math.floor(2/3*numBalls)) {
+                    if (i % 3 === 2) {
+                        infectedOne = false;
                 infectedTwo = false;
                 infectedThree = true;
                 ballStartColor = colorThree;
@@ -115,11 +121,11 @@ const sketch = p => {
                 infectedThree = false;
                 ballStartColor = colorOne;
             }
-
-            let ballDiameter = ballDiameterInitial
-            // let ballDiameter = ballDiameterInitial + 10 * Math.random()
-
-
+            
+            // let ballDiameter = ballDiameterInitial
+            let ballDiameter = ballDiameterInitial + 25 * Math.random()
+            
+            
             balls[i] = new Ball(
                 // spiralConstant * i * cos(1 * i) + width / 2,
                 // spiralConstant * i * sin(1 * i) + height / 2,
@@ -133,12 +139,12 @@ const sketch = p => {
                 infectedOne,
                 infectedTwo,
                 infectedThree
-            );
-        }
-        // let i = numBalls - 1;
-        // balls[i] = new Ball(
-        //     // spiralConstant * i * cos(1 * i) + width / 2,
-        //     // spiralConstant * i * sin(1 * i) + height / 2,
+                );
+            }
+            // let i = numBalls - 1;
+            // balls[i] = new Ball(
+                //     // spiralConstant * i * cos(1 * i) + width / 2,
+                //     // spiralConstant * i * sin(1 * i) + height / 2,
         //     xCoords[i],
         //     yCoords[i],
         //     ballDiameter,
@@ -149,50 +155,51 @@ const sketch = p => {
         //     true
         // );
         p.noStroke();
-
+        
         // var minutesLabel = document.getElementById("minutes");
         // var secondsLabel = document.getElementById("seconds");
         // var totalSeconds = 0;
         // setInterval(setTime, 1000);
-
+        
         // function setTime() {
-        //     ++totalSeconds;
-        //     secondsLabel.innerHTML = pad(totalSeconds % 60);
-        //     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-        // }
-
+            //     ++totalSeconds;
+            //     secondsLabel.innerHTML = pad(totalSeconds % 60);
+            //     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+            // }
+            
         // function pad(val) {
-        //     var valString = val + "";
-        //     if (valString.length < 2) {
-        //         return "0" + valString;
-        //     } else {
-        //         return valString;
-        //     }
-        // }
-    };
-
-    p.setupPosition = () => {
+            //     var valString = val + "";
+            //     if (valString.length < 2) {
+                //         return "0" + valString;
+                //     } else {
+                    //         return valString;
+                    //     }
+                    // }
+                };
+                
+                p.setupPosition = () => {
         x = p.windowWidth / 2;
         y = p.windowHeight / 2;
     };
-
+    
     p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
         p.drawBackground();
         p.setupPosition();
     };
-
+    
     p.drawBackground = () => {
         p.background([0, 0, 0, alphaBackground]);
     };
-
+    
     p.draw = () => {
-
+        
         const start = new Date()
-
-
-
+        
+        
+        
         // console.log('p.frameCount', p.frameCount)
+        console.log('p.frameRate()', p.frameRate())
         // console.log('p.frameRate()', p.frameRate())
         if (p.frameCount % 3 === 0) {
             p.drawBackground()
@@ -203,19 +210,19 @@ const sketch = p => {
             ball.move();
             ball.display();
         });
-
+        
     };
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
     // function colorChange(ball) {
-    //     if (JSON.stringify(ball.color) === JSON.stringify([255, 255, 0])) {
-    //         return [50, 50, 0];
-    //     } else {
-    //         return [255, 255, 0];
+        //     if (JSON.stringify(ball.color) === JSON.stringify([255, 255, 0])) {
+            //         return [50, 50, 0];
+            //     } else {
+                //         return [255, 255, 0];
     //     }
     // }
 
