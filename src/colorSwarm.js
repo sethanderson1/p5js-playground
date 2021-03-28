@@ -4,15 +4,15 @@ const sketch = p => {
 
     // TODO: sometime make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
-    const numBalls = 400;
+    const numBalls = 10;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameterInitial = 10;
+    const ballDiameterInitial = 150;
     // let ballDiameter = 20;
     const diameterChange = 0.999;
     const spring = 30;
     const gravity = 0;
-    const friction = -1;
+    const wallBounceReactionFactorInitial = -1;
     const balls = [];
     const backgoundColor = 230;
     const alpha = 200;
@@ -68,7 +68,7 @@ const sketch = p => {
 
 
     p.setup = () => {
-        // p.frameRate(10);
+        p.frameRate(10);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
@@ -94,7 +94,8 @@ const sketch = p => {
                 ballStartColor = colorOne;
             }
 
-            let ballDiameter = ballDiameterInitial + 10 * Math.random()
+            let ballDiameter = ballDiameterInitial
+            // let ballDiameter = ballDiameterInitial + 10 * Math.random()
 
 
             balls[i] = new Ball(
@@ -258,7 +259,10 @@ const sketch = p => {
                 if (overlapping) {
                     // this.infectedOne = true;
                     // this.others[i].infectedOne = true;
-                    let angle = p.atan2(dy, dx);
+                    // let angle = Math.random();
+                    // let angle = p.atan2(dy, dx) + Math.random()* 0.5 ;
+                    let angle = p.atan2(dy, dx) + 0.5 - Math.random() * 2;
+                    console.log('angle', angle)
                     let targetX = this.x + p.cos(angle) * minDist;
                     let targetY = this.y + p.sin(angle) * minDist;
                     let ax = (targetX - this.others[i].x) * spring;
@@ -393,19 +397,23 @@ const sketch = p => {
             this.vy += gravity;
             this.x += this.vx / 2;
             this.y += this.vy / 2;
+            // makes sure stays in bounds of canvas
+            const wallBounceReactionFactor = wallBounceReactionFactorInitial
+            // const wallBounceReactionFactor = wallBounceReactionFactorInitial * Math.random() + 0.5
+
             if (this.x + this.diameter / 2 > width) {
                 this.x = width - this.diameter / 2;
-                this.vx *= friction;
+                this.vx *= wallBounceReactionFactor;
             } else if (this.x - this.diameter / 2 < 0) {
                 this.x = this.diameter / 2;
-                this.vx *= friction;
+                this.vx *= wallBounceReactionFactor;
             }
             if (this.y + this.diameter / 2 > height) {
                 this.y = height - this.diameter / 2;
-                this.vy *= friction;
+                this.vy *= wallBounceReactionFactor;
             } else if (this.y - this.diameter / 2 < 0) {
                 this.y = this.diameter / 2;
-                this.vy *= friction;
+                this.vy *= wallBounceReactionFactor;
             }
         }
 
