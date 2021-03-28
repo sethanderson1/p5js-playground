@@ -1,12 +1,28 @@
 // color swarm - when balls touch they change color 
 
+let colorSchemes = [
+    ['#E8614F', '#F3F2DB', '#79C3A7', '#668065', '#4B3331'],
+    ['#152A3B', '#158ca7', '#F5C03E', '#D63826', '#F5F5EB'],
+    ['#0F4155', '#288791', '#7ec873', '#F04132', '#fcf068'],
+    ['#152A3B', '#0D809C', '#F5C03E', '#D63826', '#EBEBD6'],
+    ['#0F4155', '#5399A1', '#8CA96B', '#CB5548', '#E7E6F5'],
+    ['#DBE5EC', '#336B87', '#2A3132', '#E94D35', '#EFAC55'],
+    ['#8A867F', '#FFE8B7', '#FFBE87', '#E38A74', '#BF5967'],
+    ['#507A4A', '#C0C480', '#FFEAA4', '#FFCDA4', '#FF938D'],
+    ['#2A5A26', '#3E742F', '#568D3B', '#6DA850', '#89C15F'],
+    ['#0B1C26', '#234459', '#7AA5BF', '#A0C3D9', '#BF7950'],
+    ['#234D51', '#9DD3D9', '#59C6D1', '#3B4F51', '#FF513F'],
+    ['#FF4858', '#1B7F79', '#00CCC0', '#72F2EB', '#747F7F'],
+    ['#A6BF5B', '#E85C34', '#699748', '#2D411E', '#FF5A2B'],
+];
+
 const sketch = p => {
 
     // TODO: sometime make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
 
     // TODO: do ball sizes in relation to browser width and height. calculate
-    const numBalls = 1000;
+    const numBalls = 800;
     let j = [...Array(numBalls).keys()];
     let k;
     const ballDiameterInitial = 30;
@@ -19,9 +35,13 @@ const sketch = p => {
     const backgoundColor = 230;
     const alpha = 200;
     const alphaBackground = 3
-    const colorOne = [150, 80, 80, alpha];
-    const colorTwo = [80, 150, 80, alpha];
-    const colorThree = [80, 80, 150, alpha];
+    const alphaHex = '11'
+    const colorOne = colorSchemes[0][0] + alphaHex
+    const colorTwo = colorSchemes[0][1] + alphaHex
+    const colorThree = colorSchemes[0][2] + alphaHex
+    // const colorOne = [150, 80, 80, alpha];
+    // const colorTwo = [80, 150, 80, alpha];
+    // const colorThree = [80, 80, 150, alpha];
     let ballStartColor = colorOne;
     // let ballColor = [180, 180, 180];
     let infectedOne = true;
@@ -70,7 +90,7 @@ const sketch = p => {
 
 
     p.setup = () => {
-        // p.frameRate(10);
+        p.frameRate(15);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
@@ -173,7 +193,7 @@ const sketch = p => {
 
 
         // console.log('p.frameCount', p.frameCount)
-        console.log('p.frameRate()', p.frameRate())
+        // console.log('p.frameRate()', p.frameRate())
         if (p.frameCount % 3 === 0) {
             p.drawBackground()
 
@@ -314,7 +334,9 @@ const sketch = p => {
                         // console.log('one is infectedOne')
 
                         // this.color = colorOne;
-                        this.others[i].color = colorOne;
+                        const modifiedColorOne = colorOne
+                        this.others[i].color = modifiedColorOne;
+                        // this.others[i].color = colorOne;
                         this.diameter = this.diameter / diameterChange;
                         // this.overlap = true;
                         // this.others[i].overlap = true;
@@ -423,6 +445,7 @@ const sketch = p => {
         display() {
 
             p.fill(this.color);
+            // p.fill('#E8614F');
             // p.stroke(0,0,0,88)
             // console.log(this.color[0])
             p.ellipse(this.x, this.y, this.diameter, this.diameter);
