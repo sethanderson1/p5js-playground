@@ -4,10 +4,12 @@ const sketch = p => {
 
     // TODO: sometime make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
-    const numBalls = 10;
+
+    // TODO: do ball sizes in relation to browser width and height. calculate
+    const numBalls = 1000;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameterInitial = 150;
+    const ballDiameterInitial = 30;
     // let ballDiameter = 20;
     const diameterChange = 0.999;
     const spring = 30;
@@ -68,7 +70,7 @@ const sketch = p => {
 
 
     p.setup = () => {
-        p.frameRate(10);
+        // p.frameRate(10);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
@@ -171,7 +173,7 @@ const sketch = p => {
 
 
         // console.log('p.frameCount', p.frameCount)
-        console.log('p.frameRate()', p.frameRate())
+        // console.log('p.frameRate()', p.frameRate())
         if (p.frameCount % 3 === 0) {
             p.drawBackground()
 
@@ -261,8 +263,9 @@ const sketch = p => {
                     // this.others[i].infectedOne = true;
                     // let angle = Math.random();
                     // let angle = p.atan2(dy, dx) + Math.random()* 0.5 ;
-                    let angle = p.atan2(dy, dx) + 0.5 - Math.random() * 2;
-                    console.log('angle', angle)
+                    let angle = p.atan2(dy, dx)
+                    // console.log('angle', angle)
+                    console.log('angle', Math.round(angle * 180 / Math.PI))
                     let targetX = this.x + p.cos(angle) * minDist;
                     let targetY = this.y + p.sin(angle) * minDist;
                     let ax = (targetX - this.others[i].x) * spring;
