@@ -2,12 +2,13 @@
 
 const sketch = p => {
 
-    // make thing where when two red hit each other, they turn 
+    // TODO: sometime make thing where when two red hit each other, they turn 
     // blue and when two blue hit each other they turn red
-    const numBalls = 180;
+    const numBalls = 400;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameter = 50;
+    const ballDiameterInitial = 10;
+    // let ballDiameter = 20;
     const diameterChange = 0.999;
     const spring = 30;
     const gravity = 0;
@@ -16,9 +17,9 @@ const sketch = p => {
     const backgoundColor = 230;
     const alpha = 200;
     const alphaBackground = 3
-    const colorOne = [150, 80, 80,alpha];
-    const colorTwo = [80, 150, 80,alpha];
-    const colorThree = [80, 80, 150,alpha];
+    const colorOne = [150, 80, 80, alpha];
+    const colorTwo = [80, 150, 80, alpha];
+    const colorThree = [80, 80, 150, alpha];
     let ballStartColor = colorOne;
     // let ballColor = [180, 180, 180];
     let infectedOne = true;
@@ -92,6 +93,10 @@ const sketch = p => {
                 infectedThree = false;
                 ballStartColor = colorOne;
             }
+
+            let ballDiameter = ballDiameterInitial + 10 * Math.random()
+
+
             balls[i] = new Ball(
                 // spiralConstant * i * cos(1 * i) + width / 2,
                 // spiralConstant * i * sin(1 * i) + height / 2,
@@ -155,12 +160,19 @@ const sketch = p => {
     };
 
     p.drawBackground = () => {
-        p.background([0,0,0,alphaBackground]);
+        p.background([0, 0, 0, alphaBackground]);
     };
 
     p.draw = () => {
+
+        const start = new Date()
+
+
+
+        // console.log('p.frameCount', p.frameCount)
+        console.log('p.frameRate()', p.frameRate())
         if (p.frameCount % 3 === 0) {
-            p.drawBackground() 
+            p.drawBackground()
 
         }
         balls.forEach(ball => {
