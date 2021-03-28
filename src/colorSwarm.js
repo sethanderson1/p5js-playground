@@ -90,7 +90,7 @@ const sketch = p => {
 
 
     p.setup = () => {
-        p.frameRate(15);
+        // p.frameRate(15);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
