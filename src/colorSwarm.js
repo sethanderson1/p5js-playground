@@ -173,7 +173,7 @@ const sketch = p => {
 
 
         // console.log('p.frameCount', p.frameCount)
-        // console.log('p.frameRate()', p.frameRate())
+        console.log('p.frameRate()', p.frameRate())
         if (p.frameCount % 3 === 0) {
             p.drawBackground()
 
@@ -265,7 +265,7 @@ const sketch = p => {
                     // let angle = p.atan2(dy, dx) + Math.random()* 0.5 ;
                     let angle = p.atan2(dy, dx)
                     // console.log('angle', angle)
-                    console.log('angle', Math.round(angle * 180 / Math.PI))
+                    // console.log('angle', Math.round(angle * 180 / Math.PI))
                     let targetX = this.x + p.cos(angle) * minDist;
                     let targetY = this.y + p.sin(angle) * minDist;
                     let ax = (targetX - this.others[i].x) * spring;
