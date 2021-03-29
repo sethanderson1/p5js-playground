@@ -36,9 +36,12 @@ const sketch = p => {
     const alpha = 200;
     const alphaBackground = 3
     const alphaHex = '11'
-    const colorOne = colorSchemes[0][0] + alphaHex
-    const colorTwo = colorSchemes[0][1] + alphaHex
-    const colorThree = colorSchemes[0][2] + alphaHex
+    const colorOne = colorSchemes[9][0] + alphaHex
+    const colorTwo = colorSchemes[9][1] + alphaHex
+    const colorThree = colorSchemes[9][2] + alphaHex
+    // const colorOne = colorSchemes[0][0] + alphaHex
+    // const colorTwo = colorSchemes[0][1] + alphaHex
+    // const colorThree = colorSchemes[0][2] + alphaHex
     // const colorOne = [150, 80, 80, alpha];
     // const colorTwo = [80, 150, 80, alpha];
     // const colorThree = [80, 80, 150, alpha];
