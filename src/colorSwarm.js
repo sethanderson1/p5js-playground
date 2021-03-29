@@ -22,10 +22,10 @@ const sketch = p => {
     // blue and when two blue hit each other they turn red
 
     // TODO: do ball sizes in relation to browser width and height. calculate
-    const numBalls = 800;
+    const numBalls = 1600;
     let j = [...Array(numBalls).keys()];
     let k;
-    const ballDiameterInitial = 30;
+    const ballDiameterInitial = 22;
     // let ballDiameter = 20;
     const diameterChange = 0.999;
     const spring = 30;
@@ -93,7 +93,7 @@ const sketch = p => {
 
 
     p.setup = () => {
-        // p.frameRate(15);
+        p.frameRate(15);
         p.createCanvas(width, height);
         p.drawBackground();
         p.setupPosition();
